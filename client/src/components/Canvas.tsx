@@ -11,9 +11,15 @@ import {
   Panel,
 } from '@xyflow/react';
 import { PatternNode } from './PatternNode';
+import { StartNode } from './StartNode';
+import { EndNode } from './EndNode';
+import { InputNode } from './InputNode';
 
 const nodeTypes = {
   patternNode: PatternNode,
+  startNode: StartNode,
+  endNode: EndNode,
+  inputNode: InputNode,
 };
 
 const initialNodes: any[] = [];
