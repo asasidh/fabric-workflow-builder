@@ -1,0 +1,3 @@
+Task: Add an "Execute" button to the UI that serializes the graph and sends it to the backend
+Summary: Implemented a control panel on the canvas with an input textarea and a 'Run Workflow' button. The button serializes the current graph and sends it to the backend /api/execute endpoint.
+Files: client/src/components/Canvas.tsx, client/src/components/Canvas.test.tsx
