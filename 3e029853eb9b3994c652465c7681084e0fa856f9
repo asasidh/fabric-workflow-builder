@@ -1,0 +1,3 @@
+Task: Update Execution Engine to respect Start/End/Input nodes
+Summary: Updated backend execution logic to handle Start, End, and Input nodes. InputNode respects 'useClipboard' (mocked) and 'text' data. EndNode acts as a pass-through/sink.
+Files: server/src/app.ts, server/src/app.test.ts
