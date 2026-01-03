@@ -12,11 +12,17 @@
 - [x] Task: Configure React Flow canvas to accept dropped patterns and create nodes 27fb5b4
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Core Canvas & UI' (Protocol in workflow.md) b1cefab
 
-## Phase 3: Workflow Execution Logic
+## Phase 3: Workflow Execution Logic [checkpoint: 05dfa54]
 - [x] Task: Implement the execution engine on the backend (mocking Fabric CLI calls for now) de87751
 - [x] Task: Add an "Execute" button to the UI that serializes the graph and sends it to the backend 9369558
 - [x] Task: Display execution status and results on the nodes or in a dedicated panel 5889cf9
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Workflow Execution Logic' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: Workflow Execution Logic' (Protocol in workflow.md) 05dfa54
+
+## Phase 3.5: Enhanced Nodes
+- [ ] Task: Create specific node types for Start, End, and User Input
+- [ ] Task: Implement User Input Node with Clipboard checkbox
+- [ ] Task: Update Execution Engine to respect Start/End/Input nodes
+- [ ] Task: Conductor - User Manual Verification 'Phase 3.5: Enhanced Nodes' (Protocol in workflow.md)
 
 ## Phase 4: Persistence & Export
 - [ ] Task: Implement auto-save to Local Storage
