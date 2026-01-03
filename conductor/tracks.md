@@ -4,5 +4,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-## [ ] Track: MVP: Core Canvas & Workflow Execution
+## [~] Track: MVP: Core Canvas & Workflow Execution
 *Link: [./conductor/tracks/mvp_core_20260103/](./conductor/tracks/mvp_core_20260103/)*
