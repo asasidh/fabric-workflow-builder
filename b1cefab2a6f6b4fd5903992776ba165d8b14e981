@@ -1,0 +1,8 @@
+Phase: Phase 2: Core Canvas & UI
+Automated Tests:
+- Client: vitest (passed 6 tests total across Sidebar, Canvas, and App)
+Manual Verification:
+- Verified Sidebar with draggable mock patterns.
+- Verified drop logic and node creation on the React Flow canvas.
+- Verified connection logic between nodes.
+User Confirmation: Received 'Yes, this is broadly in line with what I had in mind.' confirmation from user.
