@@ -15,8 +15,12 @@ app.get('/', (req, res) => {
 
 interface Node {
   id: string;
+  type?: string;
   data: {
-    label: string;
+    label?: string;
+    text?: string;
+    useClipboard?: boolean;
+    [key: string]: any;
   };
 }
 
@@ -76,7 +80,20 @@ app.post('/api/execute', (req, res) => {
       ? incomingEdges.map(e => results[e.source]).join('\n\n')
       : input;
       
-    results[nodeId] = `Mock output for ${node.data.label}: Processing "${nodeInput.substring(0, 30)}${nodeInput.length > 30 ? '...' : ''}"`;
+    if (node.type === 'inputNode') {
+       if (node.data.useClipboard) {
+         results[nodeId] = "Mock Clipboard Content: [User's Clipboard Data]";
+       } else {
+         results[nodeId] = node.data.text || '';
+       }
+    } else if (node.type === 'startNode') {
+        results[nodeId] = "Workflow Started";
+    } else if (node.type === 'endNode') {
+        results[nodeId] = nodeInput;
+    } else {
+        // Pattern Node
+        results[nodeId] = `Mock output for ${node.data.label}: Processing "${nodeInput ? nodeInput.substring(0, 30) + (nodeInput.length > 30 ? '...' : '') : ''}"`;
+    }
   });
 
   res.json({ results });

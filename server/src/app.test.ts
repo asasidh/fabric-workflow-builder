@@ -24,4 +24,23 @@ describe('POST /api/execute', () => {
     expect(response.status).toBe(200);
     expect(response.body.results['1']).toContain('Mock output for Summarize');
   });
+
+  it('executes a workflow with InputNode and EndNode', async () => {
+    const workflow = {
+      nodes: [
+        { id: '1', type: 'inputNode', data: { text: 'Custom Input' } },
+        { id: '2', type: 'endNode', data: {} }
+      ],
+      edges: [
+        { source: '1', target: '2' }
+      ]
+    };
+    const response = await request(app)
+      .post('/api/execute')
+      .send({ workflow });
+    
+    expect(response.status).toBe(200);
+    expect(response.body.results['1']).toBe('Custom Input');
+    expect(response.body.results['2']).toBe('Custom Input');
+  });
 });
