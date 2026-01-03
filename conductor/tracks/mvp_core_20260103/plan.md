@@ -13,7 +13,7 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Core Canvas & UI' (Protocol in workflow.md) b1cefab
 
 ## Phase 3: Workflow Execution Logic
-- [ ] Task: Implement the execution engine on the backend (mocking Fabric CLI calls for now)
+- [x] Task: Implement the execution engine on the backend (mocking Fabric CLI calls for now) de87751
 - [ ] Task: Add an "Execute" button to the UI that serializes the graph and sends it to the backend
 - [ ] Task: Display execution status and results on the nodes or in a dedicated panel
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Workflow Execution Logic' (Protocol in workflow.md)
