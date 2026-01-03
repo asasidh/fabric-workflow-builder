@@ -1,5 +1,5 @@
-import { ReactFlow, Background, Controls } from '@xyflow/react';
 import { Sidebar } from './components/Sidebar';
+import { Canvas } from './components/Canvas';
 
 function App() {
   return (
@@ -8,16 +8,7 @@ function App() {
       <Sidebar />
 
       {/* Main Content (Canvas) */}
-      <main className="flex-1 relative bg-gray-50">
-        <ReactFlow
-          nodes={[]}
-          edges={[]}
-          fitView
-        >
-          <Background color="#ccc" variant={"dots" as any} />
-          <Controls />
-        </ReactFlow>
-      </main>
+      <Canvas />
     </div>
   );
 }
