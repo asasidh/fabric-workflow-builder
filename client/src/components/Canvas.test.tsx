@@ -8,8 +8,15 @@ describe('Canvas', () => {
     expect(container.querySelector('.react-flow')).toBeInTheDocument();
   });
 
-  it('shows the instructions panel', () => {
+  it('renders the execution control panel', () => {
     render(<Canvas />);
-    expect(screen.getByText(/Drag patterns from the sidebar/i)).toBeInTheDocument();
+    expect(screen.getByText(/Initial Input/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Run Workflow/i })).toBeInTheDocument();
+  });
+
+  it('disables the run button when no nodes are present', () => {
+    render(<Canvas />);
+    const button = screen.getByRole('button', { name: /Run Workflow/i });
+    expect(button).toBeDisabled();
   });
 });
