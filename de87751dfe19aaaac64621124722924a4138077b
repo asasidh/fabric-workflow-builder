@@ -1,0 +1,3 @@
+Task: Implement the execution engine on the backend (mocking Fabric CLI calls for now)
+Summary: Added /api/execute endpoint in Express. Implemented a topological sort algorithm to determine node execution order and pass data between connected nodes.
+Files: server/src/app.ts, server/src/app.test.ts
