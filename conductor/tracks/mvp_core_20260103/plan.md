@@ -3,7 +3,7 @@
 ## Phase 1: Project Scaffolding
 - [x] Task: Initialize Frontend with Vite, React, TypeScript, and Tailwind CSS b4ce2b0
 - [x] Task: Install and configure React Flow and Framer Motion 598525a
-- [ ] Task: Set up a basic Express server with TypeScript
+- [x] Task: Set up a basic Express server with TypeScript 68ae742
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Project Scaffolding' (Protocol in workflow.md)
 
 ## Phase 2: Core Canvas & UI
