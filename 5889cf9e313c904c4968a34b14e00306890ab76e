@@ -1,0 +1,3 @@
+Task: Display execution status and results on the nodes or in a dedicated panel
+Summary: Created a custom PatternNode component using React Flow's nodeTypes. Updated the canvas logic to map execution results from the backend back to the nodes' data property for display.
+Files: client/src/components/PatternNode.tsx, client/src/components/PatternNode.test.tsx, client/src/components/Canvas.tsx
