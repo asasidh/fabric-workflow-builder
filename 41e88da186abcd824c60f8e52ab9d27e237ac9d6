@@ -1,0 +1,3 @@
+Task: Create specific node types for Start, End, and User Input
+Summary: Implemented StartNode, EndNode, and InputNode components. Updated Sidebar to include them as 'Controls'. Registered new node types in Canvas. InputNode includes a checkbox for clipboard (logic to be implemented).
+Files: client/src/components/*Node.tsx, client/src/components/Sidebar.tsx, client/src/components/Canvas.tsx
