@@ -1,10 +1,10 @@
 # Track Plan: MVP: Core Canvas & Workflow Execution
 
-## Phase 1: Project Scaffolding
+## Phase 1: Project Scaffolding [checkpoint: c798393]
 - [x] Task: Initialize Frontend with Vite, React, TypeScript, and Tailwind CSS b4ce2b0
 - [x] Task: Install and configure React Flow and Framer Motion 598525a
 - [x] Task: Set up a basic Express server with TypeScript 68ae742
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Project Scaffolding' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Project Scaffolding' (Protocol in workflow.md) c798393
 
 ## Phase 2: Core Canvas & UI
 - [ ] Task: Create the basic layout with a Sidebar and a Canvas area
