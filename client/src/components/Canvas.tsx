@@ -10,6 +10,11 @@ import {
   ReactFlowProvider,
   Panel,
 } from '@xyflow/react';
+import { PatternNode } from './PatternNode';
+
+const nodeTypes = {
+  patternNode: PatternNode,
+};
 
 const initialNodes: any[] = [];
 const initialEdges: any[] = [];
@@ -22,8 +27,6 @@ const CanvasInner = () => {
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [inputText, setInputText] = useState('Sample input text for the workflow');
   const [isExecuting, setIsExecuting] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [results, setResults] = useState<Record<string, string>>({});
   
   const { screenToFlowPosition } = useReactFlow();
 
@@ -79,8 +82,22 @@ const CanvasInner = () => {
         }),
       });
       const data = await response.json();
-      setResults(data.results);
-      // Results will be displayed in the next task
+      
+      // Update nodes with results
+      setNodes((nds) =>
+        nds.map((node) => {
+          if (data.results[node.id]) {
+            return {
+              ...node,
+              data: {
+                ...node.data,
+                result: data.results[node.id],
+              },
+            };
+          }
+          return node;
+        })
+      );
     } catch (error) {
       console.error('Execution failed:', error);
     } finally {
@@ -96,6 +113,7 @@ const CanvasInner = () => {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        nodeTypes={nodeTypes}
         fitView
       >
         <Background color="#ccc" variant={"dots" as any} />
