@@ -8,7 +8,7 @@
 
 ## Phase 2: Core Canvas & UI
 - [x] Task: Create the basic layout with a Sidebar and a Canvas area 8d9dccd
-- [ ] Task: Implement a draggable Pattern Sidebar with mock patterns
+- [x] Task: Implement a draggable Pattern Sidebar with mock patterns de39a0c
 - [ ] Task: Configure React Flow canvas to accept dropped patterns and create nodes
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Core Canvas & UI' (Protocol in workflow.md)
 
