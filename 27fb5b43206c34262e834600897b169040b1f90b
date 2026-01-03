@@ -1,0 +1,3 @@
+Task: Configure React Flow canvas to accept dropped patterns and create nodes
+Summary: Implemented drop logic using ReactFlowProvider and useReactFlow. Added onDragOver and onDrop handlers to calculate position and add pattern nodes to the graph.
+Files: client/src/components/Canvas.tsx, client/src/components/Canvas.test.tsx, client/src/App.tsx
