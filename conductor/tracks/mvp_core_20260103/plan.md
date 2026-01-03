@@ -7,7 +7,7 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Project Scaffolding' (Protocol in workflow.md) c798393
 
 ## Phase 2: Core Canvas & UI
-- [ ] Task: Create the basic layout with a Sidebar and a Canvas area
+- [x] Task: Create the basic layout with a Sidebar and a Canvas area 8d9dccd
 - [ ] Task: Implement a draggable Pattern Sidebar with mock patterns
 - [ ] Task: Configure React Flow canvas to accept dropped patterns and create nodes
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Core Canvas & UI' (Protocol in workflow.md)
