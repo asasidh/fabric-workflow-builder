@@ -1,0 +1,3 @@
+Task: Install and configure React Flow and Framer Motion
+Summary: Installed @xyflow/react and framer-motion. Imported React Flow styles in index.css.
+Files: client/package.json, client/src/index.css
