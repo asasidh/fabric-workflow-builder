@@ -15,7 +15,7 @@
 ## Phase 3: Workflow Execution Logic
 - [x] Task: Implement the execution engine on the backend (mocking Fabric CLI calls for now) de87751
 - [x] Task: Add an "Execute" button to the UI that serializes the graph and sends it to the backend 9369558
-- [ ] Task: Display execution status and results on the nodes or in a dedicated panel
+- [x] Task: Display execution status and results on the nodes or in a dedicated panel 5889cf9
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Workflow Execution Logic' (Protocol in workflow.md)
 
 ## Phase 4: Persistence & Export
