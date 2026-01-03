@@ -6,11 +6,11 @@
 - [x] Task: Set up a basic Express server with TypeScript 68ae742
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Project Scaffolding' (Protocol in workflow.md) c798393
 
-## Phase 2: Core Canvas & UI
+## Phase 2: Core Canvas & UI [checkpoint: b1cefab]
 - [x] Task: Create the basic layout with a Sidebar and a Canvas area 8d9dccd
 - [x] Task: Implement a draggable Pattern Sidebar with mock patterns de39a0c
 - [x] Task: Configure React Flow canvas to accept dropped patterns and create nodes 27fb5b4
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Core Canvas & UI' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Core Canvas & UI' (Protocol in workflow.md) b1cefab
 
 ## Phase 3: Workflow Execution Logic
 - [ ] Task: Implement the execution engine on the backend (mocking Fabric CLI calls for now)
