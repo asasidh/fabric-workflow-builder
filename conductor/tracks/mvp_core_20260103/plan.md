@@ -21,7 +21,7 @@
 ## Phase 3.5: Enhanced Nodes
 - [x] Task: Create specific node types for Start, End, and User Input 41e88da
 - [x] Task: Implement User Input Node with Clipboard checkbox 41e88da
-- [ ] Task: Update Execution Engine to respect Start/End/Input nodes
+- [x] Task: Update Execution Engine to respect Start/End/Input nodes 3e02985
 - [ ] Task: Conductor - User Manual Verification 'Phase 3.5: Enhanced Nodes' (Protocol in workflow.md)
 
 ## Phase 4: Persistence & Export
