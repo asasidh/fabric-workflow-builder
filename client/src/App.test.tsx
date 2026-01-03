@@ -1,17 +1,16 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import App from './App';
 
-describe('App', () => {
-  it('renders Vite + React heading', () => {
+describe('App Layout', () => {
+  it('renders the Fabric Patterns sidebar', () => {
     render(<App />);
-    expect(screen.getByRole('heading', { name: /Vite \+ React/i })).toBeInTheDocument();
+    expect(screen.getByText(/Fabric Patterns/i)).toBeInTheDocument();
   });
 
-  it('increments count on button click', () => {
-    render(<App />);
-    const button = screen.getByRole('button', { name: /count is 0/i });
-    fireEvent.click(button);
-    expect(screen.getByRole('button', { name: /count is 1/i })).toBeInTheDocument();
+  it('renders the canvas area', () => {
+    const { container } = render(<App />);
+    // React Flow adds a class 'react-flow' to the container
+    expect(container.querySelector('.react-flow')).toBeInTheDocument();
   });
 });
