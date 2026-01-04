@@ -1,0 +1,8 @@
+Phase: Phase 5: UX Refinements
+Automated Tests:
+- Client: vitest (passed 9 tests)
+Manual Verification:
+- Verified adjusted zoom level (0.7).
+- Verified node deletion via Backspace and 'Delete Selected' button.
+- Verified edge deletion via 'Delete Selected' button.
+User Confirmation: Received 'yes' confirmation.
