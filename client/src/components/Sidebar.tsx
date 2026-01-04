@@ -1,10 +1,4 @@
-import React from 'react';
-
-const patterns = [
-  { id: 'summarize', name: 'Summarize', description: 'Summarize the input text' },
-  { id: 'extract_wisdom', name: 'Extract Wisdom', description: 'Extract key insights' },
-  { id: 'bullet_points', name: 'Bullet Points', description: 'Convert to bullet points' },
-];
+import React, { useEffect, useState } from 'react';
 
 const controls = [
   { id: 'input', name: 'User Input', type: 'inputNode', description: 'Provide custom input' },
@@ -12,9 +6,27 @@ const controls = [
 ];
 
 export const Sidebar = () => {
+  const [patterns, setPatterns] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPatterns = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/api/patterns');
+        const data = await response.json();
+        setPatterns(data.patterns || []);
+      } catch (error) {
+        console.error('Failed to fetch patterns:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchPatterns();
+  }, []);
+
   const onDragStart = (event: React.DragEvent, nodeType: string, label: string) => {
     event.dataTransfer.setData('application/reactflow', nodeType);
-    event.dataTransfer.setData('patternName', label); // Reusing 'patternName' for label
+    event.dataTransfer.setData('patternName', label);
     event.dataTransfer.effectAllowed = 'move';
   };
 
@@ -39,17 +51,22 @@ export const Sidebar = () => {
 
       <div className="space-y-3">
         <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Patterns</h3>
-        {patterns.map((pattern) => (
-          <div
-            key={pattern.id}
-            className="p-3 bg-blue-50 border border-blue-200 rounded-lg cursor-grab active:cursor-grabbing hover:bg-blue-100 transition-colors"
-            onDragStart={(event) => onDragStart(event, 'patternNode', pattern.name)}
-            draggable
-          >
-            <div className="font-semibold text-blue-800">{pattern.name}</div>
-            <div className="text-xs text-blue-600 mt-1">{pattern.description}</div>
-          </div>
-        ))}
+        {isLoading ? (
+          <div className="text-xs text-gray-400 italic p-3">Loading patterns...</div>
+        ) : patterns.length > 0 ? (
+          patterns.map((pattern) => (
+            <div
+              key={pattern}
+              className="p-3 bg-blue-50 border border-blue-200 rounded-lg cursor-grab active:cursor-grabbing hover:bg-blue-100 transition-colors"
+              onDragStart={(event) => onDragStart(event, 'patternNode', pattern)}
+              draggable
+            >
+              <div className="font-semibold text-blue-800 break-words">{pattern}</div>
+            </div>
+          ))
+        ) : (
+          <div className="text-xs text-red-400 italic p-3">No patterns found. Ensure Fabric is installed or running.</div>
+        )}
       </div>
     </aside>
   );
