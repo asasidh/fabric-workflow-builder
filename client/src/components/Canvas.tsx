@@ -13,6 +13,7 @@ import {
 import { PatternNode } from './PatternNode';
 import { EndNode } from './EndNode';
 import { InputNode } from './InputNode';
+import { StatusIndicator } from './StatusIndicator';
 
 const nodeTypes = {
   patternNode: PatternNode,
@@ -173,6 +174,7 @@ const CanvasInner = () => {
         <Controls />
         
         <Panel position="top-right" className="space-y-2">
+          <StatusIndicator />
           <div className="bg-white p-3 border border-gray-200 rounded shadow-sm w-48">
             <button
               onClick={onExecute}
