@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { PatternEditor } from './PatternEditor';
 
 const controls = [
   { id: 'input', name: 'User Input', type: 'inputNode', description: 'Provide custom input' },
@@ -10,6 +11,7 @@ export const Sidebar = () => {
   const [patterns, setPatterns] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isCreating, setIsCreating] = useState(false);
 
   useEffect(() => {
     const fetchPatterns = async () => {
@@ -32,6 +34,13 @@ export const Sidebar = () => {
     event.dataTransfer.effectAllowed = 'move';
   };
 
+  const handleSavePattern = async (name: string, content: string) => {
+    // Phase 3: Implement actual backend save
+    console.log('Saving pattern:', { name, content });
+    setIsCreating(false);
+    // Optimistic update for UI if we wanted, but let's wait for Phase 3
+  };
+
   const filteredPatterns = patterns.filter(pattern => 
     pattern.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -42,6 +51,7 @@ export const Sidebar = () => {
         <h2 className="text-xl font-bold text-gray-800">Fabric</h2>
         <button 
           title="Create New Pattern"
+          onClick={() => setIsCreating(true)}
           className="p-1.5 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors shadow-sm"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -49,6 +59,13 @@ export const Sidebar = () => {
           </svg>
         </button>
       </div>
+
+      {isCreating && (
+        <PatternEditor 
+          onSave={handleSavePattern} 
+          onCancel={() => setIsCreating(false)} 
+        />
+      )}
 
       <div className="mb-4">
         <input
