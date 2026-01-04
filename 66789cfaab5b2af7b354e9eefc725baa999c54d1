@@ -1,0 +1,14 @@
+Phase: Phase 4: Persistence & Export
+Automated Tests:
+- Client: vitest (passed 9 tests)
+Manual Verification:
+- Verified auto-save works on refresh.
+- Verified Export JSON works.
+- Verified Clear Canvas works.
+User Confirmation: Received 'yes' confirmation.
+User Feedback:
+1. Default zoom too close.
+2. Nodes need delete option.
+3. Edges need delete option.
+4. Drag-and-drop node splitting on edges.
+Action: Will add Phase 5: Refinements to address feedback.
