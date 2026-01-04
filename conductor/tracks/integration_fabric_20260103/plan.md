@@ -12,8 +12,8 @@
 - [x] Task: Frontend: Update `Sidebar` to fetch and display patterns from the API 9234747
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Pattern Discovery' (Protocol in workflow.md) 78effcb
 
-## Phase 3: Real Execution Engine (API-first)
-- [ ] Task: Backend: Refactor execution engine to use `POST /patterns/:name/apply`
-- [ ] Task: Backend: Implement input handling and result capture via API
-- [ ] Task: Backend: Handle API errors and propagation
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Real Execution Engine' (Protocol in workflow.md)
+## Phase 3: Real Execution Engine (API-first) [checkpoint: 118989f]
+- [x] Task: Backend: Refactor execution engine to use `POST /patterns/:name/apply` e140cb8
+- [x] Task: Backend: Implement input handling and result capture via API e140cb8
+- [x] Task: Backend: Handle API errors and propagation e140cb8
+- [x] Task: Conductor - User Manual Verification 'Phase 3: Real Execution Engine' (Protocol in workflow.md) 118989f
