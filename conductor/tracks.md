@@ -15,3 +15,6 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ## [x] Track: UI Selection Refinement
 *Link: [./conductor/tracks/ui_selection_refinement_20260104/](./conductor/tracks/ui_selection_refinement_20260104/)*
+
+## [x] Track: Data Flow Transparency & Chaining
+*Link: [./conductor/tracks/data_flow_transparency_20260104/](./conductor/tracks/data_flow_transparency_20260104/)*
