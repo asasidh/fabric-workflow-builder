@@ -1,10 +1,10 @@
 # Track Plan: UI Refinement: Node Status & Execution Details
 
-## Phase 1: Data Model & Status Indicators
-- [ ] Task: Frontend: Update `PatternNode` to accept and visualize status props (idle, running, success, error)
-- [ ] Task: Frontend: Add mock visual states to other nodes (Input, End) if applicable
-- [ ] Task: Frontend: Create `DisplayNode` component for visualizing output with status indicators
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Data Model & Status Indicators' (Protocol in workflow.md)
+## Phase 1: Data Model & Status Indicators [checkpoint: ae1f265]
+- [x] Task: Frontend: Update `PatternNode` to accept and visualize status props (idle, running, success, error) 08002c1
+- [x] Task: Frontend: Add mock visual states to other nodes (Input, End) if applicable 08002c1
+- [x] Task: Frontend: Create `DisplayNode` component for visualizing output with status indicators cf8072f
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Data Model & Status Indicators' (Protocol in workflow.md) ae1f265
 
 ## Phase 2: Node Detail Sidebar
 - [ ] Task: Frontend: Create `NodeDetailSidebar` component with Input/Output/Error tabs
