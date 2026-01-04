@@ -18,11 +18,11 @@
 - [x] Task: Display execution status and results on the nodes or in a dedicated panel 5889cf9
 - [x] Task: Conductor - User Manual Verification 'Phase 3: Workflow Execution Logic' (Protocol in workflow.md) 05dfa54
 
-## Phase 3.5: Enhanced Nodes
+## Phase 3.5: Enhanced Nodes [checkpoint: 33c175a]
 - [x] Task: Create specific node types for Start, End, and User Input 41e88da
 - [x] Task: Implement User Input Node with Clipboard checkbox 41e88da
 - [x] Task: Update Execution Engine to respect Start/End/Input nodes 3e02985
-- [ ] Task: Conductor - User Manual Verification 'Phase 3.5: Enhanced Nodes' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3.5: Enhanced Nodes' (Protocol in workflow.md) 33c175a
 
 ## Phase 4: Persistence & Export
 - [ ] Task: Implement auto-save to Local Storage
