@@ -11,6 +11,6 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Pattern Editor UI' (Protocol in workflow.md) a9ffc13
 
 ## Phase 3: Backend Persistence
-- [ ] Task: Backend: Implement `POST /api/patterns` to save patterns to the local file system
-- [ ] Task: Frontend: Connect `PatternEditor` save button to the backend API
+- [x] Task: Backend: Implement `POST /api/patterns` to save patterns to the local file system 3e957e0
+- [x] Task: Frontend: Connect `PatternEditor` save button to the backend API 3e957e0
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Backend Persistence' (Protocol in workflow.md)
