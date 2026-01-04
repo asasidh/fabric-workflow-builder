@@ -4,6 +4,8 @@ A visual, drag-and-drop interface for building and executing AI workflows using 
 
 ## Overview
 
+![Fabric Workflow Builder Screenshot](docs/images/screenshot.png)
+
 This application allows you to chain together Fabric patterns to create complex AI pipelines. It provides a visual canvas to arrange nodes, manages data flow between them, and executes the patterns using your local Fabric installation.
 
 ## Prerequisites
@@ -72,17 +74,33 @@ npm run dev
 
 1.  Open your browser to `http://localhost:5173`.
 2.  **Status Check:** Look at the top-right corner. You should see a **Green Dot** indicating "Fabric Ready". If it's Red, ensure `fabric --serve` is running.
-3.  **Pattern Library:** The sidebar on the left will populate with the Fabric patterns installed on your system.
+3.  **Pattern Library:** The left sidebar contains all your Fabric patterns. You can **Search** for specific patterns or **Create** new ones directly from the interface.
 4.  **Building a Workflow:**
     *   Drag **User Input** node to the canvas.
     *   Drag a **Pattern** (e.g., `summarize`) to the canvas.
     *   Drag an **End** node to the canvas.
-    *   **Connect** them: Output handle -> Input handle.
-5.  **Execution:**
-    *   Click the **"Run Workflow"** button in the top-right panel.
-    *   Enter your input text (or use the clipboard option on the User Input node).
-    *   Watch the nodes update with status indicators (Running -> Success).
-    *   Click on a node to view its detailed output (Feature coming in UI Refinement track).
+    *   **Connect** them: Output handle -> Input handle. The connection line will indicate the data flow.
+5.  **Execution & Monitoring:**
+    *   Click the **"Run Workflow"** button in the top-right toolbar.
+    *   Enter your input text in the User Input node.
+    *   Watch nodes update their status (Running -> Success/Error).
+    *   **Node Details:** Click on any node to open the right sidebar, where you can view its configuration, status, and raw output/result.
+
+## Features
+
+- **Visual Workflow Canvas:** Drag-and-drop nodes to build complex AI pipelines.
+- **Pattern Management:** Search through existing Fabric patterns and create new ones.
+- **Real-time Status:** Live indicators for Fabric connectivity and node execution state.
+- **Detailed Execution Logs:** View the full input/output for every step in your workflow.
+- **Flexible Execution:** Connects directly to the Fabric REST API with CLI fallback.
+
+## Project Status
+
+The following core modules have been implemented:
+- [x] **UI Refinement:** Professional node styling and status indicators.
+- [x] **Pattern Management:** Search, library organization, and pattern creation.
+- [x] **Data Flow:** Robust chaining of multiple patterns with visual transparency.
+- [x] **Execution Engine:** Seamless integration with `fabric --serve`.
 
 ## Troubleshooting
 
