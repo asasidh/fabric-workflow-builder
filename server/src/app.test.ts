@@ -31,6 +31,16 @@ describe('GET /api/patterns', () => {
   });
 });
 
+describe('GET /api/patterns/:name', () => {
+  it('returns pattern description', async () => {
+    (fabric.getPatternDescription as jest.Mock).mockResolvedValue('# Pattern Description');
+    const response = await request(app).get('/api/patterns/Summarize');
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('name', 'Summarize');
+    expect(response.body).toHaveProperty('description', '# Pattern Description');
+  });
+});
+
 describe('POST /api/execute', () => {
   it('executes a simple single-node workflow', async () => {
     (fabric.applyPattern as jest.Mock).mockResolvedValue('Fabric Result');

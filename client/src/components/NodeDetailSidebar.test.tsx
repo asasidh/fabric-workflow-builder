@@ -34,6 +34,29 @@ describe('NodeDetailSidebar', () => {
     expect(screen.getByText('Something went wrong')).toBeInTheDocument();
   });
 
+  it('fetches and displays info for pattern nodes', async () => {
+    const mockPatternNode = {
+      id: 'node-2',
+      type: 'patternNode',
+      data: { label: 'Summarize' },
+    };
+
+    global.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ description: '# Pattern Info' }),
+    });
+
+    render(<NodeDetailSidebar node={mockPatternNode} onClose={() => {}} />);
+    
+    // Switch to info
+    const infoTab = screen.getByText('info');
+    fireEvent.click(infoTab);
+
+    // Wait for content (using findBy because it's async)
+    expect(await screen.findByText('Pattern Info')).toBeInTheDocument(); // Markdown renders h1
+    expect(global.fetch).toHaveBeenCalledWith('http://localhost:3001/api/patterns/Summarize');
+  });
+
   it('calls onClose when close button clicked', () => {
     const onClose = vi.fn();
     render(<NodeDetailSidebar node={mockNode} onClose={onClose} />);

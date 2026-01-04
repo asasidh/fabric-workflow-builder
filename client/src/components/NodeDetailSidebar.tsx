@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 
 interface NodeDetailSidebarProps {
@@ -7,14 +7,50 @@ interface NodeDetailSidebarProps {
 }
 
 export const NodeDetailSidebar: React.FC<NodeDetailSidebarProps> = ({ node, onClose }) => {
-  const [activeTab, setActiveTab] = useState<'input' | 'output' | 'error'>('output');
+  const [activeTab, setActiveTab] = useState<'info' | 'input' | 'output' | 'error'>('output');
+  const [description, setDescription] = useState<string | null>(null);
+  const [loadingInfo, setLoadingInfo] = useState(false);
+
+  useEffect(() => {
+    setDescription(null);
+    // If it's a pattern node, default to info tab might be nice, but let's stick to user choice or default 'output'.
+    // Actually, if it's a new node selection, maybe we should reset tab?
+    // For now, keep current tab or default.
+  }, [node.id]);
+
+  const { data } = node;
+  const isPatternNode = !!data.label && node.type !== 'inputNode' && node.type !== 'endNode' && node.type !== 'displayNode';
+
+  useEffect(() => {
+    const fetchInfo = async () => {
+      if (activeTab === 'info' && isPatternNode && !description && !loadingInfo) {
+        setLoadingInfo(true);
+        try {
+          const res = await fetch(`http://localhost:3001/api/patterns/${data.label}`);
+          if (res.ok) {
+            const json = await res.json();
+            setDescription(json.description);
+          } else {
+            setDescription('Failed to load description.');
+          }
+        } catch (e) {
+          setDescription('Error loading description.');
+        } finally {
+          setLoadingInfo(false);
+        }
+      }
+    };
+    fetchInfo();
+  }, [activeTab, isPatternNode, description, loadingInfo, data.label]);
 
   if (!node) return null;
 
-  const { data } = node;
-
   const getContent = () => {
     switch (activeTab) {
+      case 'info':
+        if (!isPatternNode) return 'Info only available for Pattern Nodes.';
+        if (loadingInfo) return 'Loading description...';
+        return description || 'No description available.';
       case 'input':
         return data.input || (node.type === 'inputNode' ? data.text : '');
       case 'output':
@@ -27,6 +63,7 @@ export const NodeDetailSidebar: React.FC<NodeDetailSidebarProps> = ({ node, onCl
   };
 
   const content = getContent();
+  const tabs = ['info', 'input', 'output', 'error'] as const;
 
   return (
     <div className="w-96 border-l border-gray-200 bg-white h-full flex flex-col shadow-xl animate-in slide-in-from-right duration-300">
@@ -47,7 +84,7 @@ export const NodeDetailSidebar: React.FC<NodeDetailSidebarProps> = ({ node, onCl
       </div>
 
       <div className="flex border-b border-gray-100">
-        {(['input', 'output', 'error'] as const).map((tab) => (
+        {tabs.map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}

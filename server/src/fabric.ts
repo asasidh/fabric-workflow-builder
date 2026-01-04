@@ -1,6 +1,7 @@
 import { spawn } from 'child_process';
 import os from 'os';
 import path from 'path';
+import fs from 'fs/promises';
 
 let cachedPath: string | null = null;
 
@@ -155,16 +156,68 @@ const checkCommand = (cmd: string): Promise<{ available: boolean; version?: stri
         }
     });
 
-    process.on('close', (code) => {
-        if (!resolved) {
-            clearTimeout(timeout);
-            if (code === 0) {
-                resolve({ available: true, version: output.trim() });
-            } else {
-                resolve({ available: false });
+        process.on('close', (code) => {
+
+            if (!resolved) {
+
+                clearTimeout(timeout);
+
+                if (code === 0) {
+
+                    resolve({ available: true, version: output.trim() });
+
+                } else {
+
+                    resolve({ available: false });
+
+                }
+
+                resolved = true;
+
             }
-            resolved = true;
+
+        });
+
+      });
+
+    };
+
+    
+
+    export const getPatternDescription = async (patternName: string): Promise<string> => {
+
+      const homeDir = os.homedir();
+
+      const patternDir = path.join(homeDir, '.config', 'fabric', 'patterns', patternName);
+
+      
+
+      try {
+
+        // Try system.md first
+
+        const systemPath = path.join(patternDir, 'system.md');
+
+        try {
+
+            return await fs.readFile(systemPath, 'utf-8');
+
+        } catch {
+
+            // Try README.md
+
+            const readmePath = path.join(patternDir, 'README.md');
+
+            return await fs.readFile(readmePath, 'utf-8');
+
         }
-    });
-  });
-};
+
+      } catch (e) {
+
+           return 'No description available.';
+
+      }
+
+    };
+
+    
