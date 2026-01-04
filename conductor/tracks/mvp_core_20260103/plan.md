@@ -26,5 +26,5 @@
 
 ## Phase 4: Persistence & Export
 - [x] Task: Implement auto-save to Local Storage 5cdc4a6
-- [ ] Task: Add "Export as JSON" functionality
+- [x] Task: Add "Export as JSON" functionality e11a439
 - [ ] Task: Conductor - User Manual Verification 'Phase 4: Persistence & Export' (Protocol in workflow.md)
