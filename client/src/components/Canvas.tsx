@@ -15,6 +15,7 @@ import { EndNode } from './EndNode';
 import { InputNode } from './InputNode';
 import { DisplayNode } from './DisplayNode';
 import { StatusIndicator } from './StatusIndicator';
+import { NodeDetailSidebar } from './NodeDetailSidebar';
 
 const nodeTypes = {
   patternNode: PatternNode,
@@ -30,8 +31,12 @@ const CanvasInner = () => {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [isExecuting, setIsExecuting] = useState(false);
   const [executionError, setExecutionError] = useState<string | null>(null);
+  const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   
   const { screenToFlowPosition, setViewport, toObject, deleteElements } = useReactFlow();
+
+  // Find the selected node object
+  const selectedNode = nodes.find(n => n.id === selectedNodeId) || null;
 
   // Load from LocalStorage
   useEffect(() => {
@@ -96,7 +101,6 @@ const CanvasInner = () => {
     setIsExecuting(true);
     setExecutionError(null);
     
-    // Set all nodes to running state initially (optional, or just clear status)
     setNodes((nds) => nds.map(n => ({ ...n, data: { ...n.data, status: 'running' } })));
 
     try {
@@ -132,13 +136,13 @@ const CanvasInner = () => {
               },
             };
           }
-          return { ...node, data: { ...node.data, status: 'success' } }; // Or keep running?
+          return { ...node, data: { ...node.data, status: 'success' } };
         })
       );
     } catch (error: any) {
       console.error('Execution failed:', error);
       setExecutionError(error.message);
-      setNodes((nds) => nds.map(n => ({ ...n, data: { ...n.data, status: 'error' } })));
+      setNodes((nds) => nds.map(n => ({ ...n, data: { ...n.data, status: 'error', error: error.message } })));
     } finally {
       setIsExecuting(false);
     }
@@ -163,81 +167,104 @@ const CanvasInner = () => {
     if (selectedNodes.length > 0 || selectedEdges.length > 0) {
       if (window.confirm('Delete selected elements?')) {
         await deleteElements({ nodes: selectedNodes, edges: selectedEdges });
+        if (selectedNodes.some(n => n.id === selectedNodeId)) {
+          setSelectedNodeId(null);
+        }
       }
     } else {
        alert("Select nodes or edges to delete first.");
     }
-  }, [nodes, edges, deleteElements]);
+  }, [nodes, edges, deleteElements, selectedNodeId]);
 
   const onClear = () => {
     if (window.confirm('Are you sure you want to clear the canvas?')) {
       setNodes([]);
       setEdges([]);
+      setSelectedNodeId(null);
       localStorage.removeItem(STORAGE_KEY);
     }
   };
 
+  const onNodeClick = useCallback((_: React.MouseEvent, node: any) => {
+    setSelectedNodeId(node.id);
+  }, []);
+
+  const onPaneClick = useCallback(() => {
+    setSelectedNodeId(null);
+  }, []);
+
   return (
-    <div className="flex-1 relative bg-gray-50 h-full" onDragOver={onDragOver} onDrop={onDrop}>
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        nodeTypes={nodeTypes}
-        fitView
-        defaultViewport={{ x: 0, y: 0, zoom: 0.7 }}
-        fitViewOptions={{ padding: 0.2, minZoom: 0.5, maxZoom: 2 }}
-        deleteKeyCode={['Backspace', 'Delete']}
-      >
-        <Background color="#ccc" variant={"dots" as any} />
-        <Controls />
-        
-        <Panel position="top-right" className="space-y-2">
-          <StatusIndicator />
-          <div className="bg-white p-3 border border-gray-200 rounded shadow-sm w-48">
-            <button
-              onClick={onExecute}
-              disabled={isExecuting || nodes.length === 0}
-              className={`w-full py-2 px-4 rounded font-bold text-white transition-all ${
-                isExecuting || nodes.length === 0
-                  ? 'bg-gray-300 cursor-not-allowed'
-                  : 'bg-blue-500 hover:bg-blue-600 shadow-md active:scale-95'
-              }`}
-            >
-              {isExecuting ? 'Executing...' : 'Run Workflow'}
-            </button>
-            {executionError && (
-              <div className="mt-2 p-2 bg-red-50 border border-red-200 rounded text-xs text-red-600">
-                Error: {executionError}
-              </div>
-            )}
-            <button
-              onClick={onExport}
-              disabled={nodes.length === 0}
-              className="mt-2 w-full py-1 px-4 rounded text-xs font-semibold text-gray-700 hover:bg-gray-50 border border-gray-200 transition-colors disabled:opacity-50"
-            >
-              Export JSON
-            </button>
-            <button
-              onClick={onDeleteSelected}
-              className="mt-2 w-full py-1 px-4 rounded text-xs font-semibold text-red-600 hover:bg-red-50 border border-red-200 transition-colors"
-            >
-              Delete Selected
-            </button>
-            <button
-              onClick={onClear}
-              className="mt-2 w-full py-1 px-4 rounded text-xs font-semibold text-red-600 hover:bg-red-50 transition-colors"
-            >
-              Clear Canvas
-            </button>
-          </div>
-          <div className="bg-white p-2 border border-gray-200 rounded shadow-sm text-xs text-gray-500 text-center">
-            Changes are saved automatically
-          </div>
-        </Panel>
-      </ReactFlow>
+    <div className="flex-1 relative bg-gray-50 h-full flex overflow-hidden">
+      <div className="flex-1 relative">
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          onNodeClick={onNodeClick}
+          onPaneClick={onPaneClick}
+          nodeTypes={nodeTypes}
+          fitView
+          defaultViewport={{ x: 0, y: 0, zoom: 0.7 }}
+          fitViewOptions={{ padding: 0.2, minZoom: 0.5, maxZoom: 2 }}
+          deleteKeyCode={['Backspace', 'Delete']}
+        >
+          <Background color="#ccc" variant={"dots" as any} />
+          <Controls />
+          
+          <Panel position="top-right" className="space-y-2">
+            <StatusIndicator />
+            <div className="bg-white p-3 border border-gray-200 rounded shadow-sm w-48">
+              <button
+                onClick={onExecute}
+                disabled={isExecuting || nodes.length === 0}
+                className={`w-full py-2 px-4 rounded font-bold text-white transition-all ${
+                  isExecuting || nodes.length === 0
+                    ? 'bg-gray-300 cursor-not-allowed'
+                    : 'bg-blue-500 hover:bg-blue-600 shadow-md active:scale-95'
+                }`}
+              >
+                {isExecuting ? 'Executing...' : 'Run Workflow'}
+              </button>
+              {executionError && (
+                <div className="mt-2 p-2 bg-red-50 border border-red-200 rounded text-xs text-red-600">
+                  Error: {executionError}
+                </div>
+              )}
+              <button
+                onClick={onExport}
+                disabled={nodes.length === 0}
+                className="mt-2 w-full py-1 px-4 rounded text-xs font-semibold text-gray-700 hover:bg-gray-50 border border-gray-200 transition-colors disabled:opacity-50"
+              >
+                Export JSON
+              </button>
+              <button
+                onClick={onDeleteSelected}
+                className="mt-2 w-full py-1 px-4 rounded text-xs font-semibold text-red-600 hover:bg-red-50 border border-red-200 transition-colors"
+              >
+                Delete Selected
+              </button>
+              <button
+                onClick={onClear}
+                className="mt-2 w-full py-1 px-4 rounded text-xs font-semibold text-red-600 hover:bg-red-50 transition-colors"
+              >
+                Clear Canvas
+              </button>
+            </div>
+            <div className="bg-white p-2 border border-gray-200 rounded shadow-sm text-xs text-gray-500 text-center">
+              Changes are saved automatically
+            </div>
+          </Panel>
+        </ReactFlow>
+      </div>
+
+      {selectedNode && (
+        <NodeDetailSidebar 
+          node={selectedNode} 
+          onClose={() => setSelectedNodeId(null)} 
+        />
+      )}
     </div>
   );
 };
