@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { checkFabricStatus } from './fabric';
+import { checkFabricStatus, getPatterns } from './fabric';
 
 dotenv.config();
 
@@ -17,6 +17,11 @@ app.get('/', (req, res) => {
 app.get('/api/status', async (req, res) => {
   const status = await checkFabricStatus();
   res.json(status);
+});
+
+app.get('/api/patterns', async (req, res) => {
+  const patterns = await getPatterns();
+  res.json({ patterns });
 });
 
 interface Node {

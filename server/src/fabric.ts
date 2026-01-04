@@ -4,6 +4,10 @@ import path from 'path';
 
 let cachedPath: string | null = null;
 
+export const _resetCache = () => {
+  cachedPath = null;
+};
+
 export const getFabricPath = async (): Promise<string | null> => {
   if (cachedPath) return cachedPath;
 
