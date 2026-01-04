@@ -6,11 +6,11 @@
 - [x] Task: Frontend: Create `DisplayNode` component for visualizing output with status indicators cf8072f
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Data Model & Status Indicators' (Protocol in workflow.md) ae1f265
 
-## Phase 2: Node Detail Sidebar
-- [ ] Task: Frontend: Create `NodeDetailSidebar` component with Input/Output/Error tabs
-- [ ] Task: Frontend: Integrate `react-markdown` for rich text rendering in the sidebar
-- [ ] Task: Frontend: Update `Canvas` layout to include the Detail Sidebar (collapsible or fixed on right)
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Node Detail Sidebar' (Protocol in workflow.md)
+## Phase 2: Node Detail Sidebar [checkpoint: 4ef7026]
+- [x] Task: Frontend: Create `NodeDetailSidebar` component with Input/Output/Error tabs 55516fd
+- [x] Task: Frontend: Integrate `react-markdown` for rich text rendering in the sidebar 55516fd
+- [x] Task: Frontend: Update `Canvas` layout to include the Detail Sidebar (collapsible or fixed on right) 55516fd
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Node Detail Sidebar' (Protocol in workflow.md) 4ef7026
 
 ## Phase 3: Integration & Interaction
 - [ ] Task: Frontend: Wire up node selection to open the Detail Sidebar
