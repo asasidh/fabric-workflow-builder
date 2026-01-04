@@ -152,6 +152,8 @@ const CanvasInner = () => {
         onConnect={onConnect}
         nodeTypes={nodeTypes}
         fitView
+        defaultViewport={{ x: 0, y: 0, zoom: 0.7 }}
+        fitViewOptions={{ padding: 0.2, minZoom: 0.5, maxZoom: 2 }}
       >
         <Background color="#ccc" variant={"dots" as any} />
         <Controls />
