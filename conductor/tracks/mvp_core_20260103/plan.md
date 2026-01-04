@@ -29,7 +29,7 @@
 - [x] Task: Add "Export as JSON" functionality e11a439
 - [x] Task: Conductor - User Manual Verification 'Phase 4: Persistence & Export' (Protocol in workflow.md) 66789cf
 
-## Phase 5: UX Refinements
+## Phase 5: UX Refinements [checkpoint: 242f99b]
 - [x] Task: Adjust default zoom level (zoom out) ccd2b79
 - [x] Task: Enable Node and Edge deletion (UI controls) 6d41d1e
-- [ ] Task: Conductor - User Manual Verification 'Phase 5: UX Refinements' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 5: UX Refinements' (Protocol in workflow.md) 242f99b
