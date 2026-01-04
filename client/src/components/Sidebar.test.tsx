@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Sidebar } from './Sidebar';
 
@@ -36,8 +36,52 @@ describe('Sidebar', () => {
 
     render(<Sidebar />);
     
-    await waitFor(() => {
-      expect(screen.getByText(/No patterns found/i)).toBeInTheDocument();
+        await waitFor(() => {
+    
+          expect(screen.getByText(/No patterns found/i)).toBeInTheDocument();
+    
+        });
+    
+      });
+    
+    
+    
+      it('filters patterns based on search input', async () => {
+    
+        global.fetch = vi.fn().mockResolvedValue({
+    
+          json: () => Promise.resolve({ patterns: ['summarize', 'extract_wisdom', 'write_essay'] }),
+    
+        });
+    
+    
+    
+        const { getByPlaceholderText, queryByText } = render(<Sidebar />);
+    
+        
+    
+        await waitFor(() => {
+    
+          expect(screen.getByText('summarize')).toBeInTheDocument();
+    
+        });
+    
+    
+    
+        const searchInput = getByPlaceholderText(/Search patterns.../i);
+    
+        fireEvent.change(searchInput, { target: { value: 'wisdom' } });
+    
+    
+    
+        expect(screen.getByText('extract_wisdom')).toBeInTheDocument();
+    
+        expect(queryByText('summarize')).not.toBeInTheDocument();
+    
+        expect(queryByText('write_essay')).not.toBeInTheDocument();
+    
+      });
+    
     });
-  });
-});
+    
+    

@@ -5,7 +5,7 @@ import App from './App';
 describe('App Layout', () => {
   it('renders the Fabric Patterns sidebar', () => {
     render(<App />);
-    expect(screen.getByText(/Fabric Patterns/i)).toBeInTheDocument();
+    expect(screen.getByText(/^Fabric$/i)).toBeInTheDocument();
   });
 
   it('renders the canvas area', () => {
