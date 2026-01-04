@@ -1,0 +1,3 @@
+Task: Fix UI bugs and refine node types
+Summary: Removed StartNode as InputNode serves as the entry point. Fixed InputNode dragging issue by applying 'nodrag' only to interactive elements. Removed 'Initial Input' textarea from Canvas panel.
+Files: client/src/components/*
