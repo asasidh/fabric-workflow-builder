@@ -41,6 +41,27 @@ describe('GET /api/patterns/:name', () => {
   });
 });
 
+describe('POST /api/patterns', () => {
+  it('saves a new pattern', async () => {
+    (fabric.savePattern as jest.Mock).mockResolvedValue(undefined);
+    const response = await request(app)
+      .post('/api/patterns')
+      .send({ name: 'new_pattern', content: 'new content' });
+    
+    expect(response.status).toBe(201);
+    expect(response.body.message).toBe('Pattern saved successfully');
+    expect(fabric.savePattern).toHaveBeenCalledWith('new_pattern', 'new content');
+  });
+
+  it('returns 400 if name or content missing', async () => {
+    const response = await request(app)
+      .post('/api/patterns')
+      .send({ name: 'new_pattern' });
+    
+    expect(response.status).toBe(400);
+  });
+});
+
 describe('POST /api/execute', () => {
   it('executes a simple single-node workflow', async () => {
     (fabric.applyPattern as jest.Mock).mockResolvedValue('Fabric Result');

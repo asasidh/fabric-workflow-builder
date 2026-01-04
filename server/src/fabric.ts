@@ -212,12 +212,32 @@ const checkCommand = (cmd: string): Promise<{ available: boolean; version?: stri
 
         }
 
-      } catch (e) {
+            } catch (e) {
 
-           return 'No description available.';
+                 return 'No description available.';
 
-      }
+            }
 
-    };
+          };
+
+      
+
+          export const savePattern = async (name: string, content: string): Promise<void> => {
+
+            const homeDir = os.homedir();
+
+            const patternDir = path.join(homeDir, '.config', 'fabric', 'patterns', name);
+
+            const systemPath = path.join(patternDir, 'system.md');
+
+      
+
+            await fs.mkdir(patternDir, { recursive: true });
+
+            await fs.writeFile(systemPath, content, 'utf-8');
+
+          };
+
+      
 
     

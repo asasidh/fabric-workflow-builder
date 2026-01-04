@@ -13,18 +13,20 @@ export const Sidebar = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isCreating, setIsCreating] = useState(false);
 
+  const fetchPatterns = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch('http://localhost:3001/api/patterns');
+      const data = await response.json();
+      setPatterns(data.patterns || []);
+    } catch (error) {
+      console.error('Failed to fetch patterns:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchPatterns = async () => {
-      try {
-        const response = await fetch('http://localhost:3001/api/patterns');
-        const data = await response.json();
-        setPatterns(data.patterns || []);
-      } catch (error) {
-        console.error('Failed to fetch patterns:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
     fetchPatterns();
   }, []);
 
@@ -35,10 +37,24 @@ export const Sidebar = () => {
   };
 
   const handleSavePattern = async (name: string, content: string) => {
-    // Phase 3: Implement actual backend save
-    console.log('Saving pattern:', { name, content });
-    setIsCreating(false);
-    // Optimistic update for UI if we wanted, but let's wait for Phase 3
+    try {
+      const response = await fetch('http://localhost:3001/api/patterns', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, content }),
+      });
+
+      if (response.ok) {
+        setIsCreating(false);
+        await fetchPatterns(); // Refresh the list
+      } else {
+        const error = await response.json();
+        alert(`Failed to save pattern: ${error.error}`);
+      }
+    } catch (error) {
+      console.error('Error saving pattern:', error);
+      alert('Error saving pattern. Is the server running?');
+    }
   };
 
   const filteredPatterns = patterns.filter(pattern => 

@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { checkFabricStatus, getPatterns, applyPattern, getPatternDescription } from './fabric';
+import { checkFabricStatus, getPatterns, applyPattern, getPatternDescription, savePattern } from './fabric';
 
 dotenv.config();
 
@@ -28,6 +28,19 @@ app.get('/api/patterns/:name', async (req, res) => {
   const { name } = req.params;
   const description = await getPatternDescription(name);
   res.json({ name, description });
+});
+
+app.post('/api/patterns', async (req, res) => {
+  const { name, content } = req.body;
+  if (!name || !content) {
+    return res.status(400).json({ error: 'Name and content are required' });
+  }
+  try {
+    await savePattern(name, content);
+    res.status(201).json({ message: 'Pattern saved successfully' });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 interface Node {
