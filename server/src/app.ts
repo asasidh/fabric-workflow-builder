@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { checkFabricStatus } from './fabric';
 
 dotenv.config();
 
@@ -11,6 +12,11 @@ app.use(express.json());
 
 app.get('/', (req, res) => {
   res.send('Fabric Workflow Builder API');
+});
+
+app.get('/api/status', async (req, res) => {
+  const status = await checkFabricStatus();
+  res.json(status);
 });
 
 interface Node {

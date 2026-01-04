@@ -9,6 +9,14 @@ describe('GET /', () => {
   });
 });
 
+describe('GET /api/status', () => {
+  it('returns fabric status', async () => {
+    const response = await request(app).get('/api/status');
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('available');
+  });
+});
+
 describe('POST /api/execute', () => {
   it('executes a simple single-node workflow', async () => {
     const workflow = {
