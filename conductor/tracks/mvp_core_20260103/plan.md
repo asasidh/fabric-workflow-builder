@@ -31,5 +31,5 @@
 
 ## Phase 5: UX Refinements
 - [x] Task: Adjust default zoom level (zoom out) ccd2b79
-- [ ] Task: Enable Node and Edge deletion (UI controls)
+- [x] Task: Enable Node and Edge deletion (UI controls) 6d41d1e
 - [ ] Task: Conductor - User Manual Verification 'Phase 5: UX Refinements' (Protocol in workflow.md)
