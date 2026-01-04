@@ -7,9 +7,8 @@ const patterns = [
 ];
 
 const controls = [
-  { id: 'start', name: 'Start', type: 'startNode', description: 'Workflow entry point' },
-  { id: 'end', name: 'End', type: 'endNode', description: 'Workflow exit point' },
   { id: 'input', name: 'User Input', type: 'inputNode', description: 'Provide custom input' },
+  { id: 'end', name: 'End', type: 'endNode', description: 'Workflow exit point' },
 ];
 
 export const Sidebar = () => {

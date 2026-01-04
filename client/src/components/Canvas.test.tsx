@@ -10,7 +10,6 @@ describe('Canvas', () => {
 
   it('renders the execution control panel', () => {
     render(<Canvas />);
-    expect(screen.getByText(/Initial Input/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Run Workflow/i })).toBeInTheDocument();
   });
 

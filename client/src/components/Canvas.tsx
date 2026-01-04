@@ -11,13 +11,11 @@ import {
   Panel,
 } from '@xyflow/react';
 import { PatternNode } from './PatternNode';
-import { StartNode } from './StartNode';
 import { EndNode } from './EndNode';
 import { InputNode } from './InputNode';
 
 const nodeTypes = {
   patternNode: PatternNode,
-  startNode: StartNode,
   endNode: EndNode,
   inputNode: InputNode,
 };
@@ -31,7 +29,6 @@ const getId = () => `node_${id++}`;
 const CanvasInner = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-  const [inputText, setInputText] = useState('Sample input text for the workflow');
   const [isExecuting, setIsExecuting] = useState(false);
   
   const { screenToFlowPosition } = useReactFlow();
@@ -84,7 +81,7 @@ const CanvasInner = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           workflow: { nodes, edges },
-          input: inputText
+          input: '' // Legacy input, not used if InputNodes are present
         }),
       });
       const data = await response.json();
@@ -126,20 +123,11 @@ const CanvasInner = () => {
         <Controls />
         
         <Panel position="top-right" className="space-y-2">
-          <div className="bg-white p-3 border border-gray-200 rounded shadow-sm w-64">
-            <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wider">
-              Initial Input
-            </label>
-            <textarea
-              className="w-full text-sm border border-gray-200 rounded p-2 focus:ring-2 focus:ring-blue-500 outline-none"
-              rows={3}
-              value={inputText}
-              onChange={(e) => setInputText(e.target.value)}
-            />
+          <div className="bg-white p-3 border border-gray-200 rounded shadow-sm w-48">
             <button
               onClick={onExecute}
               disabled={isExecuting || nodes.length === 0}
-              className={`mt-2 w-full py-2 px-4 rounded font-bold text-white transition-all ${
+              className={`w-full py-2 px-4 rounded font-bold text-white transition-all ${
                 isExecuting || nodes.length === 0
                   ? 'bg-gray-300 cursor-not-allowed'
                   : 'bg-blue-500 hover:bg-blue-600 shadow-md active:scale-95'
