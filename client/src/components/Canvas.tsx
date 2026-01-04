@@ -8,7 +8,6 @@ import {
   addEdge,
   useReactFlow,
   ReactFlowProvider,
-  Panel,
 } from '@xyflow/react';
 import { PatternNode } from './PatternNode';
 import { EndNode } from './EndNode';
@@ -16,6 +15,7 @@ import { InputNode } from './InputNode';
 import { DisplayNode } from './DisplayNode';
 import { StatusIndicator } from './StatusIndicator';
 import { NodeDetailSidebar } from './NodeDetailSidebar';
+import { Toolbar } from './Toolbar';
 
 const nodeTypes = {
   patternNode: PatternNode,
@@ -194,81 +194,53 @@ const CanvasInner = () => {
   }, []);
 
   return (
-    <div className="flex-1 relative bg-gray-50 h-full flex overflow-hidden">
-      <div 
-        className="flex-1 relative" 
-        onDragOver={onDragOver} 
-        onDrop={onDrop}
-      >
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
-          onNodeClick={onNodeClick}
-          onPaneClick={onPaneClick}
-          nodeTypes={nodeTypes}
-          fitView
-          defaultViewport={{ x: 0, y: 0, zoom: 0.7 }}
-          fitViewOptions={{ padding: 0.2, minZoom: 0.5, maxZoom: 2 }}
-          deleteKeyCode={['Backspace', 'Delete']}
+    <div className="flex-1 relative bg-gray-50 h-full flex flex-col overflow-hidden">
+      <Toolbar
+        onExecute={onExecute}
+        onExport={onExport}
+        onDelete={onDeleteSelected}
+        onClear={onClear}
+        isExecuting={isExecuting}
+        executionError={executionError}
+        hasNodes={nodes.length > 0}
+      />
+      
+      <div className="flex-1 relative flex overflow-hidden">
+        <div 
+          className="flex-1 relative" 
+          onDragOver={onDragOver} 
+          onDrop={onDrop}
         >
-          <Background color="#ccc" variant={"dots" as any} />
-          <Controls />
-          
-          <Panel position="top-right" className="space-y-2">
-            <StatusIndicator />
-            <div className="bg-white p-3 border border-gray-200 rounded shadow-sm w-48">
-              <button
-                onClick={onExecute}
-                disabled={isExecuting || nodes.length === 0}
-                className={`w-full py-2 px-4 rounded font-bold text-white transition-all ${
-                  isExecuting || nodes.length === 0
-                    ? 'bg-gray-300 cursor-not-allowed'
-                    : 'bg-blue-500 hover:bg-blue-600 shadow-md active:scale-95'
-                }`}
-              >
-                {isExecuting ? 'Executing...' : 'Run Workflow'}
-              </button>
-              {executionError && (
-                <div className="mt-2 p-2 bg-red-50 border border-red-200 rounded text-xs text-red-600">
-                  Error: {executionError}
-                </div>
-              )}
-              <button
-                onClick={onExport}
-                disabled={nodes.length === 0}
-                className="mt-2 w-full py-1 px-4 rounded text-xs font-semibold text-gray-700 hover:bg-gray-50 border border-gray-200 transition-colors disabled:opacity-50"
-              >
-                Export JSON
-              </button>
-              <button
-                onClick={onDeleteSelected}
-                className="mt-2 w-full py-1 px-4 rounded text-xs font-semibold text-red-600 hover:bg-red-50 border border-red-200 transition-colors"
-              >
-                Delete Selected
-              </button>
-              <button
-                onClick={onClear}
-                className="mt-2 w-full py-1 px-4 rounded text-xs font-semibold text-red-600 hover:bg-red-50 transition-colors"
-              >
-                Clear Canvas
-              </button>
+          <ReactFlow
+            nodes={nodes}
+            edges={edges}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onConnect={onConnect}
+            onNodeClick={onNodeClick}
+            onPaneClick={onPaneClick}
+            nodeTypes={nodeTypes}
+            fitView
+            defaultViewport={{ x: 0, y: 0, zoom: 0.7 }}
+            fitViewOptions={{ padding: 0.2, minZoom: 0.5, maxZoom: 2 }}
+            deleteKeyCode={['Backspace', 'Delete']}
+          >
+            <Background color="#ccc" variant={"dots" as any} />
+            <Controls />
+            
+            <div className="absolute bottom-2 left-2 bg-white/50 p-2 rounded text-[10px] text-gray-500 pointer-events-none">
+              Changes saved automatically
             </div>
-            <div className="bg-white p-2 border border-gray-200 rounded shadow-sm text-xs text-gray-500 text-center">
-              Changes are saved automatically
-            </div>
-          </Panel>
-        </ReactFlow>
-      </div>
+          </ReactFlow>
+        </div>
 
-      {selectedNode && (
-        <NodeDetailSidebar 
-          node={selectedNode} 
-          onClose={() => setSelectedNodeId(null)} 
-        />
-      )}
+        {selectedNode && (
+          <NodeDetailSidebar 
+            node={selectedNode} 
+            onClose={() => setSelectedNodeId(null)} 
+          />
+        )}
+      </div>
     </div>
   );
 };
