@@ -10,7 +10,8 @@
 ## Backend (Initial Implementation)
 - **Runtime:** Node.js with TypeScript.
 - **Framework:** Express.js to create a lightweight local API.
-- **Integration:** Child Process execution to interact with the local `fabric` CLI or direct API integrations for execution logic.
+- **Integration:** Fabric REST API (primary) via HTTP fetching from http://localhost:8080.
+- **Fallback:** Child Process execution to interact with the local `fabric` CLI if the API is not detected.
 
 ## Future Considerations
 - **Client-Side Mode:** An option to run the application entirely in-browser, calling LLM APIs directly via proxy or CORS-enabled endpoints.
