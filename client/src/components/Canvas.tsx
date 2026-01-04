@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import {
   ReactFlow,
   Background,
@@ -20,18 +20,33 @@ const nodeTypes = {
   inputNode: InputNode,
 };
 
-const initialNodes: any[] = [];
-const initialEdges: any[] = [];
-
-let id = 0;
-const getId = () => `node_${id++}`;
+const STORAGE_KEY = 'fabric-workflow-state';
 
 const CanvasInner = () => {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [isExecuting, setIsExecuting] = useState(false);
   
-  const { screenToFlowPosition } = useReactFlow();
+  const { screenToFlowPosition, setViewport } = useReactFlow();
+
+  // Load from LocalStorage
+  useEffect(() => {
+    const savedState = localStorage.getItem(STORAGE_KEY);
+    if (savedState) {
+      const { nodes: savedNodes, edges: savedEdges, viewport } = JSON.parse(savedState);
+      setNodes(savedNodes || []);
+      setEdges(savedEdges || []);
+      if (viewport) {
+        setViewport(viewport);
+      }
+    }
+  }, [setNodes, setEdges, setViewport]);
+
+  // Save to LocalStorage
+  useEffect(() => {
+    const state = { nodes, edges };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }, [nodes, edges]);
 
   const onConnect = useCallback(
     (params: any) => setEdges((eds) => addEdge(params, eds)),
@@ -60,7 +75,7 @@ const CanvasInner = () => {
       });
 
       const newNode = {
-        id: getId(),
+        id: `node_${Date.now()}`,
         type,
         position,
         data: { label: patternName },
@@ -81,12 +96,11 @@ const CanvasInner = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           workflow: { nodes, edges },
-          input: '' // Legacy input, not used if InputNodes are present
+          input: ''
         }),
       });
       const data = await response.json();
       
-      // Update nodes with results
       setNodes((nds) =>
         nds.map((node) => {
           if (data.results[node.id]) {
@@ -105,6 +119,14 @@ const CanvasInner = () => {
       console.error('Execution failed:', error);
     } finally {
       setIsExecuting(false);
+    }
+  };
+
+  const onClear = () => {
+    if (window.confirm('Are you sure you want to clear the canvas?')) {
+      setNodes([]);
+      setEdges([]);
+      localStorage.removeItem(STORAGE_KEY);
     }
   };
 
@@ -135,9 +157,15 @@ const CanvasInner = () => {
             >
               {isExecuting ? 'Executing...' : 'Run Workflow'}
             </button>
+            <button
+              onClick={onClear}
+              className="mt-2 w-full py-1 px-4 rounded text-xs font-semibold text-red-600 hover:bg-red-50 transition-colors"
+            >
+              Clear Canvas
+            </button>
           </div>
           <div className="bg-white p-2 border border-gray-200 rounded shadow-sm text-xs text-gray-500 text-center">
-            Drag patterns onto the canvas to start
+            Changes are saved automatically
           </div>
         </Panel>
       </ReactFlow>
