@@ -98,7 +98,7 @@ app.post('/api/execute', async (req, res) => {
          } else {
            results[nodeId] = node.data.text || '';
          }
-      } else if (node.type === 'endNode') {
+      } else if (node.type === 'endNode' || node.type === 'displayNode') {
           results[nodeId] = nodeInput;
       } else {
           // Real Fabric Execution

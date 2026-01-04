@@ -29,6 +29,7 @@ const CanvasInner = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [isExecuting, setIsExecuting] = useState(false);
+  const [executionError, setExecutionError] = useState<string | null>(null);
   
   const { screenToFlowPosition, setViewport, toObject, deleteElements } = useReactFlow();
 
@@ -93,6 +94,11 @@ const CanvasInner = () => {
     if (nodes.length === 0) return;
     
     setIsExecuting(true);
+    setExecutionError(null);
+    
+    // Set all nodes to running state initially (optional, or just clear status)
+    setNodes((nds) => nds.map(n => ({ ...n, data: { ...n.data, status: 'running' } })));
+
     try {
       const response = await fetch('http://localhost:3001/api/execute', {
         method: 'POST',
@@ -102,7 +108,16 @@ const CanvasInner = () => {
           input: ''
         }),
       });
+
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.status} ${response.statusText}`);
+      }
+
       const data = await response.json();
+      
+      if (!data.results) {
+        throw new Error('Invalid response format from server');
+      }
       
       setNodes((nds) =>
         nds.map((node) => {
@@ -112,17 +127,18 @@ const CanvasInner = () => {
               data: {
                 ...node.data,
                 result: data.results[node.id],
-                // Map result to 'output' field for sidebar consistency later
                 output: data.results[node.id], 
                 status: 'success'
               },
             };
           }
-          return node;
+          return { ...node, data: { ...node.data, status: 'success' } }; // Or keep running?
         })
       );
-    } catch (error) {
+    } catch (error: any) {
       console.error('Execution failed:', error);
+      setExecutionError(error.message);
+      setNodes((nds) => nds.map(n => ({ ...n, data: { ...n.data, status: 'error' } })));
     } finally {
       setIsExecuting(false);
     }
@@ -192,6 +208,11 @@ const CanvasInner = () => {
             >
               {isExecuting ? 'Executing...' : 'Run Workflow'}
             </button>
+            {executionError && (
+              <div className="mt-2 p-2 bg-red-50 border border-red-200 rounded text-xs text-red-600">
+                Error: {executionError}
+              </div>
+            )}
             <button
               onClick={onExport}
               disabled={nodes.length === 0}
