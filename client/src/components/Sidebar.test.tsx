@@ -11,6 +11,7 @@ describe('Sidebar', () => {
     global.fetch = vi.fn(() => new Promise(() => {}));
     render(<Sidebar />);
     expect(screen.getByText('User Input')).toBeInTheDocument();
+    expect(screen.getByText('Display Output')).toBeInTheDocument();
     expect(screen.getByText('Loading patterns...')).toBeInTheDocument();
   });
 

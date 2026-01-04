@@ -13,12 +13,14 @@ import {
 import { PatternNode } from './PatternNode';
 import { EndNode } from './EndNode';
 import { InputNode } from './InputNode';
+import { DisplayNode } from './DisplayNode';
 import { StatusIndicator } from './StatusIndicator';
 
 const nodeTypes = {
   patternNode: PatternNode,
   endNode: EndNode,
   inputNode: InputNode,
+  displayNode: DisplayNode,
 };
 
 const STORAGE_KEY = 'fabric-workflow-state';
@@ -110,6 +112,9 @@ const CanvasInner = () => {
               data: {
                 ...node.data,
                 result: data.results[node.id],
+                // Map result to 'output' field for sidebar consistency later
+                output: data.results[node.id], 
+                status: 'success'
               },
             };
           }

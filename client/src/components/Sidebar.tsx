@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 const controls = [
   { id: 'input', name: 'User Input', type: 'inputNode', description: 'Provide custom input' },
+  { id: 'display', name: 'Display Output', type: 'displayNode', description: 'Visualize stage results' },
   { id: 'end', name: 'End', type: 'endNode', description: 'Workflow exit point' },
 ];
 
@@ -35,7 +36,7 @@ export const Sidebar = () => {
       <h2 className="text-xl font-bold mb-4 text-gray-800">Fabric Patterns</h2>
       
       <div className="mb-6 space-y-3">
-        <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Controls</h3>
+        <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider text-gray-400">Controls</h3>
         {controls.map((item) => (
           <div
             key={item.id}
@@ -50,7 +51,7 @@ export const Sidebar = () => {
       </div>
 
       <div className="space-y-3">
-        <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Patterns</h3>
+        <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider text-gray-400">Patterns</h3>
         {isLoading ? (
           <div className="text-xs text-gray-400 italic p-3">Loading patterns...</div>
         ) : patterns.length > 0 ? (
