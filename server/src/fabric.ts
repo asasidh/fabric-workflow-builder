@@ -74,7 +74,7 @@ export const getPatterns = async (): Promise<string[]> => {
   if (!binary) return [];
   
   return new Promise((resolve) => {
-    const process = spawn(binary, ['--list']);
+    const process = spawn(binary, ['--listpatterns']);
     let output = '';
     process.stdout.on('data', (data) => output += data.toString());
     process.on('close', (code) => {
@@ -92,16 +92,27 @@ export const applyPattern = async (patternName: string, input: string): Promise<
   const apiStatus = await checkApiStatus();
   if (apiStatus.available) {
     try {
-      const response = await fetch(`http://localhost:8080/patterns/${patternName}/apply`, {
+      console.log(`[Fabric API] Applying pattern: ${patternName}`);
+      const response = await fetch(`http://localhost:8080/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ input }),
+        body: JSON.stringify({ 
+          pattern: patternName, 
+          message: input 
+        }),
       });
       if (response.ok) {
-        return await response.text();
+        const text = await response.text();
+        if (text.trim()) {
+           console.log(`[Fabric API] Success. Output length: ${text.length}`);
+           return text;
+        }
+        console.log(`[Fabric API] Empty response, falling back to CLI.`);
+      } else {
+        console.log(`[Fabric API] Error: ${response.status} ${response.statusText}, falling back to CLI.`);
       }
     } catch (error) {
-      console.error(`Failed to apply pattern ${patternName} via API:`, error);
+      console.error(`[Fabric API] Failed to apply pattern ${patternName} via API:`, error);
     }
   }
 
@@ -109,6 +120,7 @@ export const applyPattern = async (patternName: string, input: string): Promise<
   const binary = await getFabricPath();
   if (!binary) throw new Error('Fabric binary not found for execution');
 
+  console.log(`[Fabric CLI] Executing: ${binary} -p ${patternName}`);
   return new Promise((resolve, reject) => {
     const process = spawn(binary, ['-p', patternName]);
     let output = '';
@@ -122,8 +134,10 @@ export const applyPattern = async (patternName: string, input: string): Promise<
 
     process.on('close', (code) => {
       if (code === 0) {
+        console.log(`[Fabric CLI] Success. Output length: ${output.length}`);
         resolve(output.trim());
       } else {
+        console.error(`[Fabric CLI] Failed with code ${code}: ${errorOutput}`);
         reject(new Error(`Fabric CLI failed with code ${code}: ${errorOutput}`));
       }
     });
