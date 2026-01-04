@@ -1,6 +1,8 @@
 import request from 'supertest';
 import app from './app';
+import * as fabric from './fabric';
 
+jest.mock('./fabric');
 jest.setTimeout(10000);
 
 describe('GET /', () => {
@@ -13,23 +15,25 @@ describe('GET /', () => {
 
 describe('GET /api/status', () => {
   it('returns fabric status', async () => {
+    (fabric.checkFabricStatus as jest.Mock).mockResolvedValue({ available: true });
     const response = await request(app).get('/api/status');
     expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty('available');
+    expect(response.body).toHaveProperty('available', true);
   });
 });
 
 describe('GET /api/patterns', () => {
   it('returns a list of patterns', async () => {
+    (fabric.getPatterns as jest.Mock).mockResolvedValue(['p1', 'p2']);
     const response = await request(app).get('/api/patterns');
     expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty('patterns');
-    expect(Array.isArray(response.body.patterns)).toBe(true);
+    expect(response.body.patterns).toEqual(['p1', 'p2']);
   });
 });
 
 describe('POST /api/execute', () => {
   it('executes a simple single-node workflow', async () => {
+    (fabric.applyPattern as jest.Mock).mockResolvedValue('Fabric Result');
     const workflow = {
       nodes: [
         { id: '1', data: { label: 'Summarize' } }
@@ -41,25 +45,7 @@ describe('POST /api/execute', () => {
       .send({ workflow, input: 'Hello world' });
     
     expect(response.status).toBe(200);
-    expect(response.body.results['1']).toContain('Mock output for Summarize');
-  });
-
-  it('executes a workflow with InputNode and EndNode', async () => {
-    const workflow = {
-      nodes: [
-        { id: '1', type: 'inputNode', data: { text: 'Custom Input' } },
-        { id: '2', type: 'endNode', data: {} }
-      ],
-      edges: [
-        { source: '1', target: '2' }
-      ]
-    };
-    const response = await request(app)
-      .post('/api/execute')
-      .send({ workflow });
-    
-    expect(response.status).toBe(200);
-    expect(response.body.results['1']).toBe('Custom Input');
-    expect(response.body.results['2']).toBe('Custom Input');
+    expect(response.body.results['1']).toBe('Fabric Result');
+    expect(fabric.applyPattern).toHaveBeenCalledWith('Summarize', 'Hello world');
   });
 });

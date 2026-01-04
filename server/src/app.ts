@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { checkFabricStatus, getPatterns } from './fabric';
+import { checkFabricStatus, getPatterns, applyPattern } from './fabric';
 
 dotenv.config();
 
@@ -40,7 +40,7 @@ interface Edge {
   target: string;
 }
 
-app.post('/api/execute', (req, res) => {
+app.post('/api/execute', async (req, res) => {
   const { workflow, input } = req.body;
   
   if (!workflow || !workflow.nodes) {
@@ -84,28 +84,36 @@ app.post('/api/execute', (req, res) => {
   }
 
   // Execute in order
-  executionOrder.forEach(nodeId => {
-    const node = nodes.find(n => n.id === nodeId)!;
-    const incomingEdges = edges.filter(e => e.target === nodeId);
-    const nodeInput = incomingEdges.length > 0 
-      ? incomingEdges.map(e => results[e.source]).join('\n\n')
-      : input;
-      
-    if (node.type === 'inputNode') {
-       if (node.data.useClipboard) {
-         results[nodeId] = "Mock Clipboard Content: [User's Clipboard Data]";
-       } else {
-         results[nodeId] = node.data.text || '';
-       }
-    } else if (node.type === 'endNode') {
-        results[nodeId] = nodeInput;
-    } else {
-        // Pattern Node
-        results[nodeId] = `Mock output for ${node.data.label}: Processing "${nodeInput ? nodeInput.substring(0, 30) + (nodeInput.length > 30 ? '...' : '') : ''}"`;
+  try {
+    for (const nodeId of executionOrder) {
+      const node = nodes.find(n => n.id === nodeId)!;
+      const incomingEdges = edges.filter(e => e.target === nodeId);
+      const nodeInput = incomingEdges.length > 0 
+        ? incomingEdges.map(e => results[e.source]).join('\n\n')
+        : input;
+        
+      if (node.type === 'inputNode') {
+         if (node.data.useClipboard) {
+           results[nodeId] = "Mock Clipboard Content: [User's Clipboard Data]";
+         } else {
+           results[nodeId] = node.data.text || '';
+         }
+      } else if (node.type === 'endNode') {
+          results[nodeId] = nodeInput;
+      } else {
+          // Real Fabric Execution
+          const patternName = node.data.label;
+          if (patternName) {
+            results[nodeId] = await applyPattern(patternName, nodeInput);
+          } else {
+            results[nodeId] = 'No pattern name provided';
+          }
+      }
     }
-  });
-
-  res.json({ results });
+    res.json({ results });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 export default app;

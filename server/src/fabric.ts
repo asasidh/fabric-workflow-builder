@@ -87,6 +87,48 @@ export const getPatterns = async (): Promise<string[]> => {
   });
 };
 
+export const applyPattern = async (patternName: string, input: string): Promise<string> => {
+  const apiStatus = await checkApiStatus();
+  if (apiStatus.available) {
+    try {
+      const response = await fetch(`http://localhost:8080/patterns/${patternName}/apply`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ input }),
+      });
+      if (response.ok) {
+        return await response.text();
+      }
+    } catch (error) {
+      console.error(`Failed to apply pattern ${patternName} via API:`, error);
+    }
+  }
+
+  // Fallback to CLI
+  const binary = await getFabricPath();
+  if (!binary) throw new Error('Fabric binary not found for execution');
+
+  return new Promise((resolve, reject) => {
+    const process = spawn(binary, ['-p', patternName]);
+    let output = '';
+    let errorOutput = '';
+
+    process.stdin.write(input);
+    process.stdin.end();
+
+    process.stdout.on('data', (data) => output += data.toString());
+    process.stderr.on('data', (data) => errorOutput += data.toString());
+
+    process.on('close', (code) => {
+      if (code === 0) {
+        resolve(output.trim());
+      } else {
+        reject(new Error(`Fabric CLI failed with code ${code}: ${errorOutput}`));
+      }
+    });
+  });
+};
+
 const checkCommand = (cmd: string): Promise<{ available: boolean; version?: string }> => {
   return new Promise((resolve) => {
     const process = spawn(cmd, ['--version']);
