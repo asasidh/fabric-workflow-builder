@@ -103,6 +103,8 @@ app.post('/api/execute', async (req, res) => {
     });
   }
 
+  console.log(`[Execute] Order: ${executionOrder.join(' -> ')}`);
+
   // Execute in order
   try {
     for (const nodeId of executionOrder) {
@@ -113,6 +115,7 @@ app.post('/api/execute', async (req, res) => {
         : input;
       
       inputs[nodeId] = nodeInput;
+      console.log(`[Execute] Node ${nodeId} (${node.data.label || node.type}): Input length = ${nodeInput.length}`);
 
       if (node.type === 'inputNode') {
          if (node.data.useClipboard) {

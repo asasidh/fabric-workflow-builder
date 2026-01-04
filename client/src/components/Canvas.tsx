@@ -125,18 +125,19 @@ const CanvasInner = () => {
       
       setNodes((nds) =>
         nds.map((node) => {
-          if (data.results[node.id]) {
-            return {
-              ...node,
-              data: {
-                ...node.data,
-                result: data.results[node.id],
-                output: data.results[node.id], 
-                status: 'success'
-              },
-            };
-          }
-          return { ...node, data: { ...node.data, status: 'success' } };
+          const nodeResult = data.results[node.id];
+          const nodeInput = data.inputs[node.id];
+          
+          return {
+            ...node,
+            data: {
+              ...node.data,
+              result: nodeResult || node.data.result,
+              output: nodeResult || node.data.output,
+              input: nodeInput || node.data.input,
+              status: 'success'
+            },
+          };
         })
       );
     } catch (error: any) {
