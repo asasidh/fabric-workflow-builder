@@ -3,6 +3,7 @@
 ## Phase 1: Data Model & Status Indicators
 - [ ] Task: Frontend: Update `PatternNode` to accept and visualize status props (idle, running, success, error)
 - [ ] Task: Frontend: Add mock visual states to other nodes (Input, End) if applicable
+- [ ] Task: Frontend: Create `DisplayNode` component for visualizing output with status indicators
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Data Model & Status Indicators' (Protocol in workflow.md)
 
 ## Phase 2: Node Detail Sidebar
@@ -14,4 +15,5 @@
 ## Phase 3: Integration & Interaction
 - [ ] Task: Frontend: Wire up node selection to open the Detail Sidebar
 - [ ] Task: Frontend: Update `Canvas` execution logic to update node status and data (input/output) instead of direct label display
+- [ ] Task: Frontend: Implement logic for `DisplayNode` to show output from connected upstream nodes
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Integration & Interaction' (Protocol in workflow.md)
