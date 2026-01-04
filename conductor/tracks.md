@@ -12,3 +12,6 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ## [x] Track: Pattern Management: Search & Creation
 *Link: [./conductor/tracks/pattern_management_20260104/](./conductor/tracks/pattern_management_20260104/)*
+
+## [x] Track: UI Selection Refinement
+*Link: [./conductor/tracks/ui_selection_refinement_20260104/](./conductor/tracks/ui_selection_refinement_20260104/)*
