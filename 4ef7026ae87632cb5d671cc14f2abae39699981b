@@ -1,0 +1,11 @@
+Phase: Phase 2: Node Detail Sidebar
+Automated Tests:
+- Client: vitest (passed 19 tests)
+Manual Verification:
+- Verified Sidebar opens on node click.
+- Verified Tabs (Input, Output, Error).
+- Verified fix for drag-and-drop regression.
+User Feedback:
+1. Execution issue (Fabric API call).
+2. Input tab empty (data flow issue).
+Action: Will address in Phase 3.
