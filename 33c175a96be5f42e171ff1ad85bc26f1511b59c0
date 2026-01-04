@@ -1,0 +1,9 @@
+Phase: Phase 3.5: Enhanced Nodes
+Automated Tests:
+- Client: vitest (passed 9 tests)
+- Server: jest (passed 3 tests)
+Manual Verification:
+- Verified InputNode and EndNode UI.
+- Verified InputNode dragging and interactivity.
+- Verified backend execution with data flow from InputNode to other nodes.
+User Confirmation: Received 'yes' confirmation.
