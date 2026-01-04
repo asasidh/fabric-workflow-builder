@@ -1,0 +1,3 @@
+Task: Add "Export as JSON" functionality
+Summary: Implemented onExport using React Flow's toObject() method. Creates a Blob and triggers a download of the workflow JSON.
+Files: client/src/components/Canvas.tsx, client/src/components/Canvas.test.tsx
