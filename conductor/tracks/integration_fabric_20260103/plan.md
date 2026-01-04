@@ -2,7 +2,7 @@
 
 ## Phase 1: Fabric Detection & Status
 - [x] Task: Backend: Implement logic to detect `fabric` binary and version 7221267
-- [ ] Task: Backend: Create `/api/status` endpoint
+- [x] Task: Backend: Create `/api/status` endpoint b0dca10
 - [ ] Task: Frontend: Create `StatusIndicator` component (Green/Red/Loading) and place it in the UI
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Fabric Detection & Status' (Protocol in workflow.md)
 
