@@ -10,7 +10,7 @@
 - [x] Task: Frontend: Implement state management for editing pattern name and system prompt 4610f1e
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Pattern Editor UI' (Protocol in workflow.md) a9ffc13
 
-## Phase 3: Backend Persistence
+## Phase 3: Backend Persistence [checkpoint: e982130]
 - [x] Task: Backend: Implement `POST /api/patterns` to save patterns to the local file system 3e957e0
 - [x] Task: Frontend: Connect `PatternEditor` save button to the backend API 3e957e0
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Backend Persistence' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: Backend Persistence' (Protocol in workflow.md) e982130
