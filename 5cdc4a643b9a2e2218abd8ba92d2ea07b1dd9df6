@@ -1,0 +1,3 @@
+Task: Implement auto-save to Local Storage
+Summary: Added useEffect hooks to load/save workflow state (nodes and edges) to LocalStorage. Added a 'Clear Canvas' button to reset the state.
+Files: client/src/components/Canvas.tsx, client/src/components/Canvas.test.tsx
