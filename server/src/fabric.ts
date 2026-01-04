@@ -25,11 +25,30 @@ export const getFabricPath = async (): Promise<string | null> => {
   return null;
 };
 
-export const checkFabricStatus = async (): Promise<{ available: boolean; version?: string; binaryPath?: string }> => {
+export const checkApiStatus = async (): Promise<{ available: boolean }> => {
+  try {
+    // Fabric REST API identification: listing patterns should return 200
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), 2000);
+    const response = await fetch('http://localhost:8080/patterns/names', { signal: controller.signal });
+    clearTimeout(id);
+    return { available: response.status === 200 };
+  } catch (error) {
+    return { available: false };
+  }
+};
+
+export const checkFabricStatus = async (): Promise<{ available: boolean; version?: string; binaryPath?: string; apiAvailable?: boolean }> => {
+  // Check API first
+  const apiStatus = await checkApiStatus();
+  if (apiStatus.available) {
+    return { available: true, version: 'REST API Active (port 8080)', apiAvailable: true };
+  }
+
   const binary = await getFabricPath();
   if (!binary) return { available: false };
   const res = await checkCommand(binary);
-  return { ...res, binaryPath: binary };
+  return { ...res, binaryPath: binary, apiAvailable: false };
 };
 
 const checkCommand = (cmd: string): Promise<{ available: boolean; version?: string }> => {
