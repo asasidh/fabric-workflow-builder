@@ -51,6 +51,38 @@ export const checkFabricStatus = async (): Promise<{ available: boolean; version
   return { ...res, binaryPath: binary, apiAvailable: false };
 };
 
+export const getPatterns = async (): Promise<string[]> => {
+  const apiStatus = await checkApiStatus();
+  if (apiStatus.available) {
+    try {
+      const response = await fetch('http://localhost:8080/patterns/names');
+      if (response.ok) {
+        return await response.json();
+      }
+    } catch (error) {
+      console.error('Failed to fetch patterns from API:', error);
+    }
+  }
+
+  // Fallback to CLI
+  const binary = await getFabricPath();
+  if (!binary) return [];
+  
+  return new Promise((resolve) => {
+    const process = spawn(binary, ['--list']);
+    let output = '';
+    process.stdout.on('data', (data) => output += data.toString());
+    process.on('close', (code) => {
+      if (code === 0) {
+        // Parse CLI output (usually lines)
+        resolve(output.trim().split('\n').filter(p => p && !p.includes('Patterns:')));
+      } else {
+        resolve([]);
+      }
+    });
+  });
+};
+
 const checkCommand = (cmd: string): Promise<{ available: boolean; version?: string }> => {
   return new Promise((resolve) => {
     const process = spawn(cmd, ['--version']);
