@@ -13,7 +13,7 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Node Detail Sidebar' (Protocol in workflow.md) 4ef7026
 
 ## Phase 3: Integration & Interaction
-- [ ] Task: Frontend: Wire up node selection to open the Detail Sidebar
-- [ ] Task: Frontend: Update `Canvas` execution logic to update node status and data (input/output) instead of direct label display
-- [ ] Task: Frontend: Implement logic for `DisplayNode` to show output from connected upstream nodes
+- [x] Task: Frontend: Wire up node selection to open the Detail Sidebar f2f4089
+- [x] Task: Frontend: Update `Canvas` execution logic to update node status and data (input/output) instead of direct label display f2f4089
+- [x] Task: Frontend: Implement logic for `DisplayNode` to show output from connected upstream nodes f2f4089
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Integration & Interaction' (Protocol in workflow.md)
