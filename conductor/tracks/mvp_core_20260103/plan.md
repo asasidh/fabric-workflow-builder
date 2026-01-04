@@ -24,7 +24,12 @@
 - [x] Task: Update Execution Engine to respect Start/End/Input nodes 3e02985
 - [x] Task: Conductor - User Manual Verification 'Phase 3.5: Enhanced Nodes' (Protocol in workflow.md) 33c175a
 
-## Phase 4: Persistence & Export
+## Phase 4: Persistence & Export [checkpoint: 66789cf]
 - [x] Task: Implement auto-save to Local Storage 5cdc4a6
 - [x] Task: Add "Export as JSON" functionality e11a439
-- [ ] Task: Conductor - User Manual Verification 'Phase 4: Persistence & Export' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 4: Persistence & Export' (Protocol in workflow.md) 66789cf
+
+## Phase 5: UX Refinements
+- [ ] Task: Adjust default zoom level (zoom out)
+- [ ] Task: Enable Node and Edge deletion (UI controls)
+- [ ] Task: Conductor - User Manual Verification 'Phase 5: UX Refinements' (Protocol in workflow.md)
