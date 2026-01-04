@@ -86,8 +86,6 @@ app.post('/api/execute', (req, res) => {
        } else {
          results[nodeId] = node.data.text || '';
        }
-    } else if (node.type === 'startNode') {
-        results[nodeId] = "Workflow Started";
     } else if (node.type === 'endNode') {
         results[nodeId] = nodeInput;
     } else {
