@@ -195,7 +195,11 @@ const CanvasInner = () => {
 
   return (
     <div className="flex-1 relative bg-gray-50 h-full flex overflow-hidden">
-      <div className="flex-1 relative">
+      <div 
+        className="flex-1 relative" 
+        onDragOver={onDragOver} 
+        onDrop={onDrop}
+      >
         <ReactFlow
           nodes={nodes}
           edges={edges}
