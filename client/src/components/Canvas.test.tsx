@@ -12,6 +12,7 @@ describe('Canvas', () => {
     render(<Canvas />);
     expect(screen.getByRole('button', { name: /Run Workflow/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Export JSON/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Delete Selected/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Clear Canvas/i })).toBeInTheDocument();
   });
 

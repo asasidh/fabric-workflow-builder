@@ -27,7 +27,7 @@ const CanvasInner = () => {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [isExecuting, setIsExecuting] = useState(false);
   
-  const { screenToFlowPosition, setViewport, toObject } = useReactFlow();
+  const { screenToFlowPosition, setViewport, toObject, deleteElements } = useReactFlow();
 
   // Load from LocalStorage
   useEffect(() => {
@@ -134,6 +134,19 @@ const CanvasInner = () => {
     URL.revokeObjectURL(url);
   }, [toObject]);
 
+  const onDeleteSelected = useCallback(async () => {
+    const selectedNodes = nodes.filter(node => node.selected);
+    const selectedEdges = edges.filter(edge => edge.selected);
+    
+    if (selectedNodes.length > 0 || selectedEdges.length > 0) {
+      if (window.confirm('Delete selected elements?')) {
+        await deleteElements({ nodes: selectedNodes, edges: selectedEdges });
+      }
+    } else {
+       alert("Select nodes or edges to delete first.");
+    }
+  }, [nodes, edges, deleteElements]);
+
   const onClear = () => {
     if (window.confirm('Are you sure you want to clear the canvas?')) {
       setNodes([]);
@@ -154,6 +167,7 @@ const CanvasInner = () => {
         fitView
         defaultViewport={{ x: 0, y: 0, zoom: 0.7 }}
         fitViewOptions={{ padding: 0.2, minZoom: 0.5, maxZoom: 2 }}
+        deleteKeyCode={['Backspace', 'Delete']}
       >
         <Background color="#ccc" variant={"dots" as any} />
         <Controls />
@@ -177,6 +191,12 @@ const CanvasInner = () => {
               className="mt-2 w-full py-1 px-4 rounded text-xs font-semibold text-gray-700 hover:bg-gray-50 border border-gray-200 transition-colors disabled:opacity-50"
             >
               Export JSON
+            </button>
+            <button
+              onClick={onDeleteSelected}
+              className="mt-2 w-full py-1 px-4 rounded text-xs font-semibold text-red-600 hover:bg-red-50 border border-red-200 transition-colors"
+            >
+              Delete Selected
             </button>
             <button
               onClick={onClear}
