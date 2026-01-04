@@ -30,6 +30,6 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 4: Persistence & Export' (Protocol in workflow.md) 66789cf
 
 ## Phase 5: UX Refinements
-- [ ] Task: Adjust default zoom level (zoom out)
+- [x] Task: Adjust default zoom level (zoom out) ccd2b79
 - [ ] Task: Enable Node and Edge deletion (UI controls)
 - [ ] Task: Conductor - User Manual Verification 'Phase 5: UX Refinements' (Protocol in workflow.md)
