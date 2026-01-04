@@ -50,6 +50,7 @@ app.post('/api/execute', async (req, res) => {
   const nodes: Node[] = workflow.nodes;
   const edges: Edge[] = workflow.edges || [];
   const results: Record<string, string> = {};
+  const inputs: Record<string, string> = {};
   
   // Topological Sort
   const adj = new Map<string, string[]>();
@@ -91,13 +92,18 @@ app.post('/api/execute', async (req, res) => {
       const nodeInput = incomingEdges.length > 0 
         ? incomingEdges.map(e => results[e.source]).join('\n\n')
         : input;
-        
+      
+      inputs[nodeId] = nodeInput;
+
       if (node.type === 'inputNode') {
          if (node.data.useClipboard) {
            results[nodeId] = "Mock Clipboard Content: [User's Clipboard Data]";
          } else {
            results[nodeId] = node.data.text || '';
          }
+         // For InputNode, the "output" is what it produces. 
+         // Its "input" is strictly not much unless it's chained? 
+         // But here we capture 'nodeInput' which might be empty for root.
       } else if (node.type === 'endNode' || node.type === 'displayNode') {
           results[nodeId] = nodeInput;
       } else {
@@ -110,7 +116,7 @@ app.post('/api/execute', async (req, res) => {
           }
       }
     }
-    res.json({ results });
+    res.json({ results, inputs });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }

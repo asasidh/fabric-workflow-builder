@@ -29,13 +29,20 @@ export const DisplayNode = memo(({ data }: any) => {
   }
 
   return (
-    <div className={`px-4 py-2 shadow-md rounded-md bg-purple-50 border-2 ${borderClass} min-w-[150px] transition-all duration-300`}>
+    <div className={`px-4 py-2 shadow-md rounded-md bg-purple-50 border-2 ${borderClass} min-w-[150px] max-w-[250px] transition-all duration-300`}>
       <Handle type="target" position={Position.Top} className="w-2 h-2 !bg-purple-500" />
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mb-2">
         <div className="font-bold text-xs text-purple-900 uppercase tracking-tight">Display Output</div>
         {icon}
       </div>
-      <div className="mt-1 text-[9px] text-gray-500 italic text-center">Click to view details</div>
+      
+      {(data.output || data.result) ? (
+         <div className="text-[10px] text-gray-700 font-mono bg-purple-100/50 p-2 rounded overflow-hidden max-h-24 whitespace-pre-wrap break-words">
+           {data.output || data.result}
+         </div>
+      ) : (
+        <div className="text-[9px] text-gray-500 italic text-center">Click to view details</div>
+      )}
     </div>
   );
 });

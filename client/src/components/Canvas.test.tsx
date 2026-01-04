@@ -26,4 +26,10 @@ describe('Canvas', () => {
     const button = screen.getByRole('button', { name: /Run Workflow/i });
     expect(button).toBeDisabled();
   });
+
+  it('initially does not show the NodeDetailSidebar', () => {
+    global.fetch = vi.fn(() => new Promise(() => {}));
+    render(<Canvas />);
+    expect(screen.queryByText('Node Detail')).not.toBeInTheDocument();
+  });
 });

@@ -46,6 +46,7 @@ describe('POST /api/execute', () => {
     
     expect(response.status).toBe(200);
     expect(response.body.results['1']).toBe('Fabric Result');
+    expect(response.body.inputs['1']).toBe('Hello world');
     expect(fabric.applyPattern).toHaveBeenCalledWith('Summarize', 'Hello world');
   });
 });
