@@ -1,7 +1,7 @@
 # Track Plan: Integration: Real Fabric Execution & Pattern Scanning
 
 ## Phase 1: Fabric Detection & Status
-- [ ] Task: Backend: Implement logic to detect `fabric` binary and version
+- [x] Task: Backend: Implement logic to detect `fabric` binary and version 7221267
 - [ ] Task: Backend: Create `/api/status` endpoint
 - [ ] Task: Frontend: Create `StatusIndicator` component (Green/Red/Loading) and place it in the UI
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Fabric Detection & Status' (Protocol in workflow.md)
