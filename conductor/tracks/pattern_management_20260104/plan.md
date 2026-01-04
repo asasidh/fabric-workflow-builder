@@ -6,8 +6,8 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Searchable Sidebar' (Protocol in workflow.md) 3a6dced
 
 ## Phase 2: Pattern Editor UI
-- [ ] Task: Frontend: Create `PatternEditor` component (Modal or full-screen overlay)
-- [ ] Task: Frontend: Implement state management for editing pattern name and system prompt
+- [x] Task: Frontend: Create `PatternEditor` component (Modal or full-screen overlay) 4610f1e
+- [x] Task: Frontend: Implement state management for editing pattern name and system prompt 4610f1e
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Pattern Editor UI' (Protocol in workflow.md)
 
 ## Phase 3: Backend Persistence
