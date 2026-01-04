@@ -11,6 +11,7 @@ describe('Canvas', () => {
   it('renders the execution control panel', () => {
     render(<Canvas />);
     expect(screen.getByRole('button', { name: /Run Workflow/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Export JSON/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Clear Canvas/i })).toBeInTheDocument();
   });
 

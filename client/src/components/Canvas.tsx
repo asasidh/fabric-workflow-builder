@@ -27,7 +27,7 @@ const CanvasInner = () => {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [isExecuting, setIsExecuting] = useState(false);
   
-  const { screenToFlowPosition, setViewport } = useReactFlow();
+  const { screenToFlowPosition, setViewport, toObject } = useReactFlow();
 
   // Load from LocalStorage
   useEffect(() => {
@@ -122,6 +122,18 @@ const CanvasInner = () => {
     }
   };
 
+  const onExport = useCallback(() => {
+    const flow = toObject();
+    const json = JSON.stringify(flow, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `workflow-${Date.now()}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+  }, [toObject]);
+
   const onClear = () => {
     if (window.confirm('Are you sure you want to clear the canvas?')) {
       setNodes([]);
@@ -156,6 +168,13 @@ const CanvasInner = () => {
               }`}
             >
               {isExecuting ? 'Executing...' : 'Run Workflow'}
+            </button>
+            <button
+              onClick={onExport}
+              disabled={nodes.length === 0}
+              className="mt-2 w-full py-1 px-4 rounded text-xs font-semibold text-gray-700 hover:bg-gray-50 border border-gray-200 transition-colors disabled:opacity-50"
+            >
+              Export JSON
             </button>
             <button
               onClick={onClear}
