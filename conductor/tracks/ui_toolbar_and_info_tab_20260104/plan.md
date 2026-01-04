@@ -1,9 +1,9 @@
 # Track Plan: UI Toolbar & Pattern Info
 
-## Phase 1: Top Toolbar Layout
+## Phase 1: Top Toolbar Layout [checkpoint: d6aecb1]
 - [x] Task: Frontend: Create `Toolbar` component with existing control buttons and status indicator 2f866b3
 - [x] Task: Frontend: Refactor `Canvas` to use `Toolbar` at the top and remove the React Flow `Panel` 2f866b3
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Top Toolbar Layout' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Top Toolbar Layout' (Protocol in workflow.md) d6aecb1
 
 ## Phase 2: Pattern Information Support
 - [ ] Task: Backend: Investigate `fabric` CLI or pattern folders to extract pattern descriptions/READMEs
