@@ -1,15 +1,15 @@
 import React, { memo } from 'react';
 import { Handle, Position } from '@xyflow/react';
 
-export const PatternNode = memo(({ data }: any) => {
+export const PatternNode = memo(({ data, selected }: any) => {
   const status = data.status || 'idle';
 
-  let borderClass = 'border-blue-200';
+  let borderClass = selected ? 'border-blue-600 ring-4 ring-blue-100' : 'border-blue-200';
   let icon = null;
 
   switch (status) {
     case 'running':
-      borderClass = 'border-amber-400 ring-2 ring-amber-100';
+      borderClass = selected ? 'border-amber-500 ring-4 ring-amber-100' : 'border-amber-400 ring-2 ring-amber-100';
       icon = (
         <svg className="animate-spin h-3 w-3 text-amber-500 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" data-testid="status-running">
           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>

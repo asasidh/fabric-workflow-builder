@@ -1,7 +1,7 @@
 import React, { memo, useState, useEffect } from 'react';
 import { Handle, Position, useReactFlow } from '@xyflow/react';
 
-export const InputNode = memo(({ id, data }: any) => {
+export const InputNode = memo(({ id, data, selected }: any) => {
   const { updateNodeData } = useReactFlow();
   const [useClipboard, setUseClipboard] = useState(data.useClipboard || false);
   const [text, setText] = useState(data.text || '');
@@ -11,12 +11,12 @@ export const InputNode = memo(({ id, data }: any) => {
   }, [useClipboard, text, id, updateNodeData]);
 
   const status = data.status || 'idle';
-  let borderClass = 'border-yellow-400';
+  let borderClass = selected ? 'border-yellow-600 ring-4 ring-yellow-100' : 'border-yellow-400';
   let icon = null;
 
   switch (status) {
     case 'running':
-      borderClass = 'border-amber-400 ring-2 ring-amber-100';
+      borderClass = selected ? 'border-amber-500 ring-4 ring-amber-100' : 'border-amber-400 ring-2 ring-amber-100';
       icon = (
         <svg className="animate-spin h-3 w-3 text-amber-500 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
